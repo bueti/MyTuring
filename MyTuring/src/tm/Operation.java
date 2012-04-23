@@ -3,11 +3,13 @@ package tm;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class Operation {
 
 	private List<String> tape1;
 	private List<String> tape2;
+	private int current;
 
 	public Operation() {
 
@@ -68,36 +70,47 @@ public class Operation {
 		for (int i = 1; i <= b; i++) {
 			tape1.add("0");
 		}
-
-		// Now multiply that shit...
+		System.out.println("Hallo");
+		// Now multiply this shit...
 		q0();
 
 	}
 
+	// TODO: Navigation durch die LinkedList
 	private void stepLeft(List<String> tape12) {
 		// TODO Auto-generated method stub
-
+		current = getCurrentPosition() - 1;
 	}
 
 	private void stepRight(List<String> tape12) {
 		// TODO Auto-generated method stub
+		current = getCurrentPosition() + 1;
 
 	}
 
-	private void setCurrentValue(List<String> tape12, String string) {
+	private void setCurrentValue(List<String> tape1, String value) {
 		// TODO Auto-generated method stub
-
+		// Setzte current = value
+		tape1.set(getCurrentPosition(), value);
 	}
 
 	private String getCurrentValue(List<String> tape12) {
 		// TODO Auto-generated method stub
-		return null;
+		// Aktueller Wert als Rückgabewert
+		return tape1.get(getCurrentPosition());
 	}
 
+	private int getCurrentPosition() {
+		// TODO: Aktuelle Position des R/W-Kopfes zurückgeben
+		System.out.println("Current:" + tape1.indexOf(tape1));
+		return tape1.indexOf(tape1);
+	}
+	
 	private void q0() {
 		if (getCurrentValue(tape1) == "0") {
 			setCurrentValue(tape1, "1");
 			stepRight(tape1);
+			System.out.println(getCurrentPosition());
 			q1();
 		}
 		if (getCurrentValue(tape1) == "1") {
@@ -109,6 +122,7 @@ public class Operation {
 	private void q1() {
 		if (getCurrentValue(tape1) == "0") {
 			stepRight(tape1);
+			System.out.println(getCurrentPosition());
 			q1();
 		}
 		if (getCurrentValue(tape1) == "1") {
