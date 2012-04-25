@@ -1,5 +1,5 @@
 import tm.Multiplication;
-import tm.StartMachine;
+import tm.TmGui;
 
 
 public class Starter {
@@ -9,7 +9,7 @@ public class Starter {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new StartMachine();
+		new TmGui();
 	}
 
 }

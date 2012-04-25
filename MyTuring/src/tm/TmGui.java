@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class StartMachine {
+public class TmGui {
 	private JFrame frame;
 	private JButton loadButton;
 	private JButton nextStepButton;
@@ -28,9 +28,11 @@ public class StartMachine {
 	private JComboBox operatorBox;
 	private JTextArea band1Area;
 
-	private Multiplication oper;
+	private Multiplication multi;
+	private Faculty faculty;
+	private Tape tape;
 	
-	public StartMachine() {
+	public TmGui() {
 		
 		initGui();
 		// frame.setSize(555, 450);
@@ -61,7 +63,7 @@ public class StartMachine {
 		input1Field = new JTextField();
 		input2Field = new JTextField();
 		operatorBox = new JComboBox();
-		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "+", "*", "!" }));
+		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
 
 		loadButton = new JButton("Load");
 		nextStepButton = new JButton("Next Step");
@@ -113,7 +115,13 @@ public class StartMachine {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+			if(operatorBox.getSelectedItem().equals("*") ) {
+				multi = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()), true);
+				multi.multiply();
+			}
+			if(operatorBox.getSelectedItem().equals("!") ) {
+				System.out.println("! nicht implementiert.");
+			}
 			
 		}
 		
@@ -131,12 +139,9 @@ public class StartMachine {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(operatorBox.getSelectedItem().equals("+") ) {
-				System.out.println("+ nicht mehr implementiert.");
-			}
 			if(operatorBox.getSelectedItem().equals("*") ) {
-				oper = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
-				oper.multiply();
+				multi = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()), false);
+				multi.multiply();
 			}
 			if(operatorBox.getSelectedItem().equals("!") ) {
 				System.out.println("! nicht implementiert.");
