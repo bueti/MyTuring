@@ -16,6 +16,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class TmGui {
+	
+	private int step;
+	
 	private JFrame frame;
 
 	private Container contentPane;
@@ -46,6 +49,8 @@ public class TmGui {
 		// frame.setSize(555, 450);
 		frame.pack();
 		frame.setVisible(true);
+		
+		step = 0;
 
 	}
 
@@ -117,13 +122,33 @@ public class TmGui {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			band1Area.setText("");
-			if (operatorBox.getSelectedItem().equals("*")) {
-				System.out.println("Step * nicht implementiert.");
+			if (step == 0) {
+				band1Area.setText("");
+				if (operatorBox.getSelectedItem().equals("*")) {
+					step++;
+					
+					// Initialize Tape
+					tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+					// Neues Multiplikations Objekt
+					multi = new Multiplication(tape, true);
+					// Multiplikation ausgeben
+					multi.multiply();
+					
+					for (String n : tape.getStack()) {
+						band1Area.append(n.toString());
+					}
+					stepsField.setText("" + multi.getCounter());
+					
+					northPane.setVisible(true);
+					frame.pack();
 
-			}
-			if (operatorBox.getSelectedItem().equals("!")) {
-				System.out.println("Step ! nicht implementiert.");
+				}
+				if (operatorBox.getSelectedItem().equals("!")) {
+					System.out.println("Step ! nicht implementiert.");
+				}
+			} else {
+				// goto next step....
+				
 			}
 
 		}

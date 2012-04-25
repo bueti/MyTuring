@@ -26,6 +26,7 @@ public class Multiplication {
 
 	private void q0() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("1");
 			tape.stepRight();
@@ -41,6 +42,7 @@ public class Multiplication {
 
 	private void q1() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
@@ -56,6 +58,7 @@ public class Multiplication {
 
 	private void q2() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("1");
 			tape.stepRight();
@@ -70,6 +73,7 @@ public class Multiplication {
 
 	private void q3() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
@@ -83,6 +87,7 @@ public class Multiplication {
 
 	private void q4() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
@@ -97,6 +102,7 @@ public class Multiplication {
 
 	private void q5() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 
 			tape.setValue("0");
@@ -111,6 +117,7 @@ public class Multiplication {
 
 	private void q6() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
@@ -124,6 +131,7 @@ public class Multiplication {
 
 	private void q7() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
@@ -137,6 +145,7 @@ public class Multiplication {
 
 	private void q8() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 
 			tape.setValue("0");
@@ -151,6 +160,7 @@ public class Multiplication {
 
 	private void q9() {
 		counter++;
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
 		if (tape.getValue().equals("0")) {
 
 			tape.setValue("0");
@@ -160,6 +170,7 @@ public class Multiplication {
 			tape.setValue("1");
 			tape.stepRight();
 			// Fertig :-)
+			System.out.println("e");
 		}
 	}
 
