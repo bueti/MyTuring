@@ -20,109 +20,130 @@ public class Multiplication {
 	}
 
 	private void q0() {
-		if(tape.stepRight().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("$");
+			tape.stepRight();
+			
 			q1();
 		} else {
-			tape.stepLeft();
+			
 			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
 			q9();
 		}
 	}
 
 	private void q1() {
-		if (tape.stepRight().equals("1")) {
+		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
+			tape.stepRight();
+			
 			q1();
 		} else {
 			tape.setValue("$");
 			tape.stepRight();
+			
 			q2();
 		}
 	}
 //
 	private void q2() {
-		if(tape.stepRight().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("$");
+			tape.stepRight();
 			q3();
 		} else {
-			tape.stepLeft();
+			
 			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
 			q7();
 		}
 	}
 //
 	private void q3() {
-		if(tape.stepRight().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
+			tape.stepRight();
 			q3();
 		} else {
-			tape.stepLeft();
 			tape.setValue("$");
+			tape.stepRight();
 			q4();
 		}
 	}
 //
 	private void q4() {
-		if(tape.stepRight().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
+			tape.stepRight();
 			q4();
 		}  else {
-			tape.stepLeft();
+			
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q5();
 		}
 	}
 //
 	private void q5() {
-		if(tape.stepLeft().equals("1")) {
+		if(tape.getValue().equals("1")) {
+			
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q5();
 		} else {
 			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
 			q6();
 		}
 	}
 //
 	private void q6() {
-		if(tape.stepLeft().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q6();
 		} else {
-			tape.stepRight();
 			tape.setValue("1");
+			tape.stepRight();
 			q2();
 		}
 	}
 //
 	private void q7() {
-		if(tape.stepLeft().equals("1")) {
+		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q7();
 		} else {
 			tape.setValue("$");
+			tape.stepRight();
 			q8();
 		}
 	}
 //
 	private void q8() {
-		if(tape.stepLeft().equals("1")) {
+		if(tape.getValue().equals("1")) {
+			
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q8();
 		} else {
-			tape.stepRight();
 			tape.setValue("1");
+			tape.stepRight();
 			q0();
 		}
 	}
 //
 	private void q9() {
-		if (tape.stepLeft() == "1") {
+		if (tape.getValue().equals("1")) {
+			
 			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
 			q9();
 		} else {
-			tape.stepRight();
 			tape.setValue("$");
+			tape.stepRight();
 			e();
 		}
 	}

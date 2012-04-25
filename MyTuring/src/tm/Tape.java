@@ -19,13 +19,14 @@ public class Tape {
 		initializeTape(input1, input2);
 		
 		// Start
-		setValue("$");
+//		setValue("$");
 	}
 
 	// Methods
 	private void initializeTape(int input1, int input2) {
 		// Convert input to unary and fill tape
-		for (int i = 1; i <= input1; i++) {
+		setValue("1");
+		for (int i = 1; i < input1; i++) {
 			rightStack.add("1");
 		}
 		rightStack.add("$");
@@ -73,7 +74,7 @@ public class Tape {
 	}
 
 	public void printStacks() {
-		// TODO Auto-generated method stub
+		System.out.println("Value: " + value);
 		System.out.print("Links: ");
 		for (String item : leftStack) {
 			System.out.print(item);
