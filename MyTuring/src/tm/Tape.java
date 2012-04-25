@@ -48,9 +48,8 @@ public class Tape {
 	 * Falls der rechte Stack nun leer ist, ein Trennzeichen hinzufügen
 	 * Neuen aktuellen Wert schreiben
 	 * Den letzten Wert löschen
-	 * @return den neuen aktuellen Wert zurück geben.
 	 */
-	public String stepRight() {
+	public void stepRight() {
 		leftStack.add(getValue());
 		if (rightStack.isEmpty()) {
 			rightStack.add("$");
@@ -59,7 +58,6 @@ public class Tape {
 		
 		rightStack.pop();
 		
-		return getValue();
 	}
 	
 	/**
@@ -69,17 +67,19 @@ public class Tape {
 	 */
 	public String stepLeft() {
 		rightStack.push(getValue());
+		if (leftStack.isEmpty()) {
+			leftStack.add("$");
+		}
 		setValue(leftStack.pollLast());
+		
 		return getValue();
 	}
 
 	public void printStacks() {
-		System.out.println("Value: " + value);
-		System.out.print("Links: ");
 		for (String item : leftStack) {
 			System.out.print(item);
 		}
-		System.out.print("\nRechts: ");
+		System.out.print(value);
 		for (String item : rightStack) {
 			System.out.print(item);
 		}

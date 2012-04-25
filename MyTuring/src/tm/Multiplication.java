@@ -13,8 +13,6 @@ public class Multiplication {
 
 	public void multiply() {
 		// Now multiply this shit...
-		System.out.println("\nStart: ");
-		tape.printStacks();
 		q0();
 
 	}
@@ -46,7 +44,7 @@ public class Multiplication {
 			q2();
 		}
 	}
-//
+
 	private void q2() {
 		if(tape.getValue().equals("1")) {
 			tape.setValue("$");
@@ -59,7 +57,7 @@ public class Multiplication {
 			q7();
 		}
 	}
-//
+
 	private void q3() {
 		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
@@ -71,7 +69,7 @@ public class Multiplication {
 			q4();
 		}
 	}
-//
+
 	private void q4() {
 		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
@@ -84,7 +82,7 @@ public class Multiplication {
 			q5();
 		}
 	}
-//
+
 	private void q5() {
 		if(tape.getValue().equals("1")) {
 			
@@ -97,7 +95,7 @@ public class Multiplication {
 			q6();
 		}
 	}
-//
+
 	private void q6() {
 		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
@@ -109,7 +107,7 @@ public class Multiplication {
 			q2();
 		}
 	}
-//
+
 	private void q7() {
 		if(tape.getValue().equals("1")) {
 			tape.setValue("1");
@@ -117,11 +115,11 @@ public class Multiplication {
 			q7();
 		} else {
 			tape.setValue("$");
-			tape.stepRight();
+			tape.setValue(tape.stepLeft());
 			q8();
 		}
 	}
-//
+
 	private void q8() {
 		if(tape.getValue().equals("1")) {
 			
@@ -134,7 +132,7 @@ public class Multiplication {
 			q0();
 		}
 	}
-//
+
 	private void q9() {
 		if (tape.getValue().equals("1")) {
 			
