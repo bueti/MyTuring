@@ -9,7 +9,11 @@ public class Tape {
 	private LinkedList<String> rightStack;
 	private String value;
 
-	// Constructor
+	/**
+	 * Erstellt ein neues Tape Objekt und befüllt es mit den zwei Params
+	 * @param Erste Zahl
+	 * @param Zweite Zahl
+	 */
 	public Tape(int input1, int input2) {
 		// Create left and right side of Tape
 		leftStack = new LinkedList<String>();
@@ -19,7 +23,11 @@ public class Tape {
 		initializeTape(input1, input2);
 	}
 
-	// Methods
+	/**
+	 * Konvertiert den Input zu unär und füllt das Band
+	 * @param input1
+	 * @param input2
+	 */
 	private void initializeTape(int input1, int input2) {
 		// Convert input to unary and fill tape
 		setValue("0");
@@ -72,6 +80,9 @@ public class Tape {
 		return getValue();
 	}
 
+	/**
+	 * Gibt die einzelnen Stacks aus, gut zum Debuggen
+	 */
 	public void printStacks() {
 		for (String item : leftStack) {
 			System.out.print(item);
@@ -83,6 +94,10 @@ public class Tape {
 		System.out.println("");
 	}
 	
+	/**
+	 * Gibt ein komplettes Band zurück
+	 * @return Band mit allem drum und dran
+	 */
 	public LinkedList<String> getStack() {
 		LinkedList<String> tmp = new LinkedList<String>();
 		for (String item : leftStack) {
