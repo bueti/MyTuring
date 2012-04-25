@@ -34,10 +34,12 @@ public class TmGui {
 	private JLabel input1Label;
 	private JLabel input2Label;
 	private JLabel sleepLabel;
+	private JLabel stateLabel;
 	private JTextField input1Field;
 	private JTextField input2Field;
 	private JTextField stepsField;
 	private JTextField sleepField;
+	private JTextField stateField;
 	private JComboBox operatorBox;
 	private JTextArea band1Area;
 
@@ -75,6 +77,8 @@ public class TmGui {
 		stepsLabel = new JLabel("Steps:");
 		stepsField = new JTextField();
 		band1Area = new JTextArea();
+		stateLabel = new JLabel("State:");
+		stateField = new JTextField();
 
 		input1Label = new JLabel("Input1: ");
 		input2Label = new JLabel("Input2: ");
@@ -99,7 +103,9 @@ public class TmGui {
 		northPane.add(band1Area);
 		northPane.add(stepsLabel);
 		northPane.add(stepsField);
-		northPane.setVisible(false);
+		northPane.add(stateLabel);
+		northPane.add(stateField);
+//		northPane.setVisible(false);
 
 		// Zentrum
 		centerPane.add(input1Label);
@@ -145,7 +151,7 @@ public class TmGui {
 					}
 					stepsField.setText("" + multi.getCounter());
 					
-					northPane.setVisible(true);
+//					northPane.setVisible(true);
 					frame.pack();
 
 				}
@@ -179,6 +185,8 @@ public class TmGui {
 					band1Area.append(n.toString());
 				}
 				stepsField.setText("" + multi.getCounter());
+				
+				stateField.setText("" + multi.getCurrentState());
 				
 				northPane.setVisible(true);
 				frame.pack();
