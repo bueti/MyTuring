@@ -132,7 +132,7 @@ public class StartMachine {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(operatorBox.getSelectedItem().equals("+") ) {
-				oper.addition(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+				System.out.println("+ nicht mehr implementiert.");
 			}
 			if(operatorBox.getSelectedItem().equals("*") ) {
 				oper.multiply(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
