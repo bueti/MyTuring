@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -17,37 +18,45 @@ import javax.swing.JTextField;
 
 public class TmGui {
 	private JFrame frame;
-	private JButton loadButton;
+
+	private Container contentPane;
+	private Container southPane;
+	private Container centerPane;
+	private Container northPane;
+
 	private JButton nextStepButton;
 	private JButton autoButton;
 	private JButton resetButton;
+	private JLabel band1Label;
+	private JLabel stepsLabel;
 	private JLabel input1Label;
 	private JLabel input2Label;
 	private JTextField input1Field;
 	private JTextField input2Field;
+	private JTextField stepsField;
 	private JComboBox operatorBox;
 	private JTextArea band1Area;
 
 	private Multiplication multi;
 	private Faculty faculty;
 	private Tape tape;
-	
+
 	public TmGui() {
-		
+
 		initGui();
 		// frame.setSize(555, 450);
 		frame.pack();
 		frame.setVisible(true);
-		
+
 	}
 
 	public void initGui() {
 		frame = new JFrame("Turing Machine");
 
-		Container contentPane = frame.getContentPane();
-		Container southPane = new Container();
-		Container centerPane = new Container();
-		Container northPane = new Container();
+		contentPane = frame.getContentPane();
+		southPane = new Container();
+		centerPane = new Container();
+		northPane = new Container();
 
 		contentPane.setLayout(new BorderLayout());
 
@@ -56,7 +65,10 @@ public class TmGui {
 		southPane.setLayout(new FlowLayout());
 
 		// Komponenten
-		band1Area = new JTextArea("Band 1");
+		band1Label = new JLabel("Tape 1:");
+		stepsLabel = new JLabel("Steps:");
+		stepsField = new JTextField();
+		band1Area = new JTextArea();
 
 		input1Label = new JLabel("Input1: ");
 		input2Label = new JLabel("Input2: ");
@@ -64,20 +76,21 @@ public class TmGui {
 		input2Field = new JTextField();
 		operatorBox = new JComboBox();
 		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
-
-		loadButton = new JButton("Load");
+		
 		nextStepButton = new JButton("Next Step");
 		autoButton = new JButton("Auto");
 		resetButton = new JButton("Reset");
-		
+
 		// ActionHandlers
-		loadButton.addActionListener(new LoadActionListener());
 		nextStepButton.addActionListener(new NextStepActionListener());
 		resetButton.addActionListener(new ResetActionListener());
 		autoButton.addActionListener(new AutoActionListener());
 
 		// Norden
+		northPane.add(band1Label);
 		northPane.add(band1Area);
+		northPane.add(stepsLabel);
+		northPane.add(stepsField);
 
 		// Zentrum
 		centerPane.add(input1Label);
@@ -87,7 +100,6 @@ public class TmGui {
 		centerPane.add(input2Field);
 
 		// Süden
-		southPane.add(loadButton);
 		southPane.add(nextStepButton);
 		southPane.add(autoButton);
 		southPane.add(resetButton);
@@ -99,54 +111,71 @@ public class TmGui {
 		contentPane.add(southPane, BorderLayout.SOUTH);
 
 	}
-	
-	// Innere Klassen
-	private class LoadActionListener implements ActionListener {
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
+	// Innere Klassen
 	private class NextStepActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(operatorBox.getSelectedItem().equals("*") ) {
-				multi = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()), true);
+			band1Area.setText("");
+			if (operatorBox.getSelectedItem().equals("*")) {
+				// Initialize Tape
+				tape = new Tape(Integer.parseInt(input1Field.getText()),
+						Integer.parseInt(input2Field.getText()));
+				// Neues Multiplikations Objekt
+				multi = new Multiplication(tape, true);
+				// Multiplikation ausgeben
 				multi.multiply();
+				for (String n : tape.getStack())
+					band1Area.append(n.toString());
+
 			}
-			if(operatorBox.getSelectedItem().equals("!") ) {
+			if (operatorBox.getSelectedItem().equals("!")) {
 				System.out.println("! nicht implementiert.");
 			}
-			
-		}
-		
-	}
-	private class ResetActionListener implements ActionListener {
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
 		}
-		
+
 	}
+
 	private class AutoActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(operatorBox.getSelectedItem().equals("*") ) {
-				multi = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()), false);
+			band1Area.setText("");
+			
+			// Multiplikation
+			if (operatorBox.getSelectedItem().equals("*")) {
+				// Initialize Tape
+				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+				// Neues Multiplikations Objekt
+				multi = new Multiplication(tape, false);
+				// Multiplikation ausgeben
 				multi.multiply();
+				
+				for (String n : tape.getStack()) {
+					band1Area.append(n.toString());
+				}
+				stepsField.setText("" + multi.getCounter());
 			}
-			if(operatorBox.getSelectedItem().equals("!") ) {
+			
+			// Fakultät
+			if (operatorBox.getSelectedItem().equals("!")) {
 				System.out.println("! nicht implementiert.");
 			}
 		}
-		
+
+	}
+
+	private class ResetActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			input1Field.setText("");
+			input2Field.setText("");
+			stepsField.setText("");
+			band1Area.setText("");
+		}
+
 	}
 }

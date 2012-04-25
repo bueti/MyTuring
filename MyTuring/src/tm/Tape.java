@@ -17,21 +17,18 @@ public class Tape {
 
 		// Initialize Tape
 		initializeTape(input1, input2);
-		
-		// Start
-//		setValue("$");
 	}
 
 	// Methods
 	private void initializeTape(int input1, int input2) {
 		// Convert input to unary and fill tape
-		setValue("1");
+		setValue("0");
 		for (int i = 1; i < input1; i++) {
-			rightStack.add("1");
+			rightStack.add("0");
 		}
-		rightStack.add("$");
+		rightStack.add("1");
 		for (int i = 1; i <= input2; i++) {
-			rightStack.add("1");
+			rightStack.add("0");
 		}
 	}
 
@@ -52,7 +49,7 @@ public class Tape {
 	public void stepRight() {
 		leftStack.add(getValue());
 		if (rightStack.isEmpty()) {
-			rightStack.add("$");
+			rightStack.add("1");
 		}
 		setValue(rightStack.getFirst());
 		
@@ -68,7 +65,7 @@ public class Tape {
 	public String stepLeft() {
 		rightStack.push(getValue());
 		if (leftStack.isEmpty()) {
-			leftStack.add("$");
+			leftStack.add("1");
 		}
 		setValue(leftStack.pollLast());
 		
@@ -84,5 +81,19 @@ public class Tape {
 			System.out.print(item);
 		}
 		System.out.println("");
+	}
+	
+	public LinkedList<String> getStack() {
+		LinkedList<String> tmp = new LinkedList<String>();
+		for (String item : leftStack) {
+			tmp.add(item);
+		}
+		tmp.add(value);
+		for (String item : rightStack) {
+			tmp.add(item);
+		}
+		tmp.add("1");
+		
+		return tmp;
 	}
 }
