@@ -109,6 +109,16 @@ public class Tape {
 		}
 		tmp.add("1");
 		
+		// Band aufüllen, damit vor und nach dem Cursor min 15 Zeichen sind
+		if(tmp.size() < 31) {
+			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
+				tmp.addFirst("1");
+			}
+			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
+				tmp.addLast("1");
+			}
+		}
+		
 		return tmp;
 	}
 }
