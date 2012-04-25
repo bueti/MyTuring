@@ -28,7 +28,7 @@ public class StartMachine {
 	private JComboBox operatorBox;
 	private JTextArea band1Area;
 
-	private Operation oper;
+	private Multiplication oper;
 	
 	public StartMachine() {
 		
@@ -36,7 +36,7 @@ public class StartMachine {
 		// frame.setSize(555, 450);
 		frame.pack();
 		frame.setVisible(true);
-		oper = new Operation();
+		
 	}
 
 	public void initGui() {
@@ -135,7 +135,8 @@ public class StartMachine {
 				System.out.println("+ nicht mehr implementiert.");
 			}
 			if(operatorBox.getSelectedItem().equals("*") ) {
-				oper.multiply(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+				oper = new Multiplication(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+				oper.multiply();
 			}
 			if(operatorBox.getSelectedItem().equals("!") ) {
 				System.out.println("! nicht implementiert.");
