@@ -33,9 +33,11 @@ public class TmGui {
 	private JLabel stepsLabel;
 	private JLabel input1Label;
 	private JLabel input2Label;
+	private JLabel sleepLabel;
 	private JTextField input1Field;
 	private JTextField input2Field;
 	private JTextField stepsField;
+	private JTextField sleepField;
 	private JComboBox operatorBox;
 	private JTextArea band1Area;
 
@@ -76,8 +78,10 @@ public class TmGui {
 
 		input1Label = new JLabel("Input1: ");
 		input2Label = new JLabel("Input2: ");
+		sleepLabel = new JLabel("Speed (ms): ");
 		input1Field = new JTextField();
 		input2Field = new JTextField();
+		sleepField = new JTextField("   0");
 		operatorBox = new JComboBox();
 		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
 		
@@ -108,6 +112,8 @@ public class TmGui {
 		southPane.add(nextStepButton);
 		southPane.add(autoButton);
 		southPane.add(resetButton);
+		southPane.add(sleepLabel);
+		southPane.add(sleepField);
 
 		contentPane.add(northPane, BorderLayout.NORTH);
 		contentPane.add(centerPane, BorderLayout.CENTER);
@@ -130,7 +136,7 @@ public class TmGui {
 					// Initialize Tape
 					tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
 					// Neues Multiplikations Objekt
-					multi = new Multiplication(tape, true);
+					multi = new Multiplication(tape, true, Integer.parseInt(sleepField.getText().trim()));
 					// Multiplikation ausgeben
 					multi.multiply();
 					
@@ -165,7 +171,7 @@ public class TmGui {
 				// Initialize Tape
 				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
 				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape, false);
+				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
 				// Multiplikation ausgeben
 				multi.multiply();
 				
@@ -195,6 +201,7 @@ public class TmGui {
 			input2Field.setText("");
 			stepsField.setText("");
 			band1Area.setText("");
+			sleepField.setText("   0");
 		}
 
 	}
