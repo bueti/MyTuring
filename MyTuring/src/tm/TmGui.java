@@ -90,6 +90,7 @@ public class TmGui {
 		northPane.add(band1Area);
 		northPane.add(stepsLabel);
 		northPane.add(stepsField);
+		northPane.setVisible(false);
 
 		// Zentrum
 		centerPane.add(input1Label);
@@ -147,6 +148,10 @@ public class TmGui {
 					band1Area.append(n.toString());
 				}
 				stepsField.setText("" + multi.getCounter());
+				
+				northPane.setVisible(true);
+				frame.pack();
+				
 			}
 			
 			// Fakultät
