@@ -119,19 +119,11 @@ public class TmGui {
 		public void actionPerformed(ActionEvent arg0) {
 			band1Area.setText("");
 			if (operatorBox.getSelectedItem().equals("*")) {
-				// Initialize Tape
-				tape = new Tape(Integer.parseInt(input1Field.getText()),
-						Integer.parseInt(input2Field.getText()));
-				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape, true);
-				// Multiplikation ausgeben
-				multi.multiply();
-				for (String n : tape.getStack())
-					band1Area.append(n.toString());
+				System.out.println("Step * nicht implementiert.");
 
 			}
 			if (operatorBox.getSelectedItem().equals("!")) {
-				System.out.println("! nicht implementiert.");
+				System.out.println("Step ! nicht implementiert.");
 			}
 
 		}
@@ -143,7 +135,6 @@ public class TmGui {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			band1Area.setText("");
-			
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
 				// Initialize Tape

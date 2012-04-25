@@ -20,6 +20,7 @@ public class Multiplication {
 		} else {
 			// Implement step-by-step method...
 			System.out.println("Interactive mode");
+			
 		}
 	}
 
@@ -158,15 +159,8 @@ public class Multiplication {
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
-			e();
+			// Fertig :-)
 		}
-	}
-
-	private void e() {
-		// Output
-		System.out.println("Anzahl Steps: " + getCounter());
-		System.out.println("Resultat:");
-		tape.printStacks();
 	}
 
 	public int getCounter() {
