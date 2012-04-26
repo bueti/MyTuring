@@ -181,14 +181,17 @@ public class TmGui implements Observer {
 			band1Area.setText("");
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-				// Initialize Tape
-				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
-				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
-				multi.addObserver(me);
-				// Multiplikation ausgeben
-				multi.multiply();
-				
+			    new Thread(new Runnable() {
+			        public void run() {
+        				// Initialize Tape
+        				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+        				// Neues Multiplikations Objekt
+        				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
+        				multi.addObserver(me);
+        				// Multiplikation ausgeben
+        				multi.multiply();
+			        };
+			    }).start();
 			}
 			
 			// Fakult√§t
