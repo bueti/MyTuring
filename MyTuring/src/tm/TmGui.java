@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class TmGui {
+public class TmGui implements Observer {
 	
 	private int step;
 	
@@ -49,9 +49,10 @@ public class TmGui {
 	private Multiplication multi;
 	private Faculty faculty;
 	private Tape tape;
+	private TmGui me;
 
 	public TmGui() {
-
+		me = this;
 		initGui();
 		frame.pack();
 		frame.setVisible(true);
@@ -60,6 +61,20 @@ public class TmGui {
 
 	}
 	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		String counter = "" + multi.getCounter();
+		String state = "" + multi.getCurrentState();
+		
+		band1Area.setText("");
+		for (String n : (LinkedList<String>) arg1) {
+			band1Area.append(n.toString());
+		}
+		stepsField.setText(state);
+		stateField.setText(counter);
+		frame.pack();
+		System.out.println("Band1: " + arg1.toString() + " State: " + state + " Steps: " + counter);
+	}
 	
 
 	public void initGui() {
@@ -159,23 +174,7 @@ public class TmGui {
 		}
 	}
 
-	private class AutoActionListener implements ActionListener, Observer {
-
-		@Override
-		public void update(Observable arg0, Object arg1) {
-			String counter = "" + multi.getCounter();
-			String state = "" + multi.getCurrentState();
-			
-			System.out.println("Band1: " + arg1.toString() + " State: " + state + " Steps: " + counter);
-			
-			band1Area.setText("");
-			for (String n : (LinkedList<String>) arg1) {
-				band1Area.append(n.toString());
-			}
-			stepsField.setText(state);
-			stateField.setText(counter);
-			frame.pack();
-		}
+	private class AutoActionListener implements ActionListener {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -186,7 +185,7 @@ public class TmGui {
 				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
 				// Neues Multiplikations Objekt
 				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
-				multi.addObserver(this);
+				multi.addObserver(me);
 				// Multiplikation ausgeben
 				multi.multiply();
 				
