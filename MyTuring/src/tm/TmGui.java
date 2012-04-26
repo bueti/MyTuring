@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -44,7 +43,9 @@ public class TmGui implements Observer {
 	private JTextField sleepField;
 	private JTextField stateField;
 	private JComboBox operatorBox;
-	private JTextArea band1Area;
+	private JTextArea leftArea;
+	private JTextArea valueArea;
+	private JTextArea rightArea;
 
 	private Multiplication multi;
 	private Faculty faculty;
@@ -66,14 +67,26 @@ public class TmGui implements Observer {
 		String counter = "" + multi.getCounter();
 		String state = "" + multi.getCurrentState();
 		
-		band1Area.setText("");
-		for (String n : (LinkedList<String>) arg1) {
-			band1Area.append(n.toString());
+		// Left
+		leftArea.setText("");
+		for (String n : tape.getLeftStack()) {
+			leftArea.append(n.toString());
 		}
+		// Center
+		valueArea.setText("[ ");
+		valueArea.append(tape.getValue());
+		valueArea.append(" ]");
+		// Right
+		rightArea.setText("");
+		for (String n : tape.getRightStack()) {
+			rightArea.append(n.toString());
+		}
+		rightArea.append("1");
+		
+		// Rest
 		stepsField.setText(state);
 		stateField.setText(counter);
 		frame.pack();
-		System.out.println("Band1: " + arg1.toString() + " State: " + state + " Steps: " + counter);
 	}
 	
 
@@ -94,17 +107,19 @@ public class TmGui implements Observer {
 		// Komponenten
 		band1Label = new JLabel("Tape 1:");
 		stepsLabel = new JLabel("Steps:");
-		stepsField = new JTextField();
-		band1Area = new JTextArea();
+		stepsField = new JTextField("-");
+		leftArea = new JTextArea();
+		valueArea = new JTextArea("-");
+		rightArea = new JTextArea();
 		stateLabel = new JLabel("State:");
-		stateField = new JTextField();
+		stateField = new JTextField("-");
 
-		input1Label = new JLabel("Input1: ");
-		input2Label = new JLabel("Input2: ");
-		sleepLabel = new JLabel("Speed (ms): ");
+		input1Label = new JLabel("Input1:");
+		input2Label = new JLabel("Input2:");
+		sleepLabel = new JLabel("Speed (ms):");
 		input1Field = new JTextField();
 		input2Field = new JTextField();
-		sleepField = new JTextField("   0");
+		sleepField = new JTextField("250");
 		operatorBox = new JComboBox();
 		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
 		
@@ -119,7 +134,9 @@ public class TmGui implements Observer {
 
 		// Norden
 		northPane.add(band1Label);
-		northPane.add(band1Area);
+		northPane.add(leftArea);
+		northPane.add(valueArea);
+		northPane.add(rightArea);
 		northPane.add(stepsLabel);
 		northPane.add(stepsField);
 		northPane.add(stateLabel);
@@ -153,7 +170,6 @@ public class TmGui implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if (step == 0) {
-				band1Area.setText("");
 				if (operatorBox.getSelectedItem().equals("*")) {
 					step++;
 					
@@ -178,7 +194,6 @@ public class TmGui implements Observer {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			band1Area.setText("");
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
 			    new Thread(new Runnable() {
@@ -209,8 +224,10 @@ public class TmGui implements Observer {
 			input1Field.setText("");
 			input2Field.setText("");
 			stepsField.setText("");
-			band1Area.setText("");
-			sleepField.setText("   0");
+			leftArea.setText("");
+			valueArea.setText("");
+			rightArea.setText("");
+			sleepField.setText("250");
 		}
 
 	}

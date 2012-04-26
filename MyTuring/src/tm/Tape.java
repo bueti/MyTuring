@@ -42,6 +42,20 @@ public class Tape {
 		}
 	}
 
+	/**
+	 * @return the leftStack
+	 */
+	public LinkedList<String> getLeftStack() {
+		return leftStack;
+	}
+
+	/**
+	 * @return the rightStack
+	 */
+	public LinkedList<String> getRightStack() {
+		return rightStack;
+	}
+
 	public String getValue() {
 		return value;
 	}
