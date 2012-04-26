@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -50,13 +53,14 @@ public class TmGui {
 	public TmGui() {
 
 		initGui();
-		// frame.setSize(555, 450);
 		frame.pack();
 		frame.setVisible(true);
 		
 		step = 0;
 
 	}
+	
+	
 
 	public void initGui() {
 		frame = new JFrame("Turing Machine");
@@ -105,7 +109,6 @@ public class TmGui {
 		northPane.add(stepsField);
 		northPane.add(stateLabel);
 		northPane.add(stateField);
-//		northPane.setVisible(false);
 
 		// Zentrum
 		centerPane.add(input1Label);
@@ -114,7 +117,7 @@ public class TmGui {
 		centerPane.add(input2Label);
 		centerPane.add(input2Field);
 
-		// Süden
+		// S√ºden
 		southPane.add(nextStepButton);
 		southPane.add(autoButton);
 		southPane.add(resetButton);
@@ -146,29 +149,34 @@ public class TmGui {
 					// Multiplikation ausgeben
 					multi.multiply();
 					
-					for (String n : tape.getStack()) {
-						band1Area.append(n.toString());
-					}
-					stepsField.setText("" + multi.getCounter());
-					
-//					northPane.setVisible(true);
-					frame.pack();
-
 				}
 				if (operatorBox.getSelectedItem().equals("!")) {
 					System.out.println("Step ! nicht implementiert.");
 				}
 			} else {
 				// goto next step....
-				
 			}
-
 		}
-
 	}
 
-	private class AutoActionListener implements ActionListener {
+	private class AutoActionListener implements ActionListener, Observer {
 
+		@Override
+		public void update(Observable arg0, Object arg1) {
+			String counter = "" + multi.getCounter();
+			String state = "" + multi.getCurrentState();
+			
+			System.out.println("Band1: " + arg1.toString() + " State: " + state + " Steps: " + counter);
+			
+			band1Area.setText("");
+			for (String n : (LinkedList<String>) arg1) {
+				band1Area.append(n.toString());
+			}
+			stepsField.setText(state);
+			stateField.setText(counter);
+			frame.pack();
+		}
+		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			band1Area.setText("");
@@ -178,22 +186,13 @@ public class TmGui {
 				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
 				// Neues Multiplikations Objekt
 				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
+				multi.addObserver(this);
 				// Multiplikation ausgeben
 				multi.multiply();
 				
-				for (String n : tape.getStack()) {
-					band1Area.append(n.toString());
-				}
-				stepsField.setText("" + multi.getCounter());
-				
-				stateField.setText("" + multi.getCurrentState());
-				
-				northPane.setVisible(true);
-				frame.pack();
-				
 			}
 			
-			// Fakultät
+			// Fakult√§t
 			if (operatorBox.getSelectedItem().equals("!")) {
 				System.out.println("! nicht implementiert.");
 			}
@@ -213,4 +212,6 @@ public class TmGui {
 		}
 
 	}
+
+
 }

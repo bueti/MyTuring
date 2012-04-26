@@ -1,6 +1,7 @@
 package tm;
 
 import java.util.LinkedList;
+import java.util.Observable;
 
 public class Tape {
 
@@ -29,6 +30,7 @@ public class Tape {
 	 * @param input2
 	 */
 	private void initializeTape(int input1, int input2) {
+
 		// Convert input to unary and fill tape
 		setValue("0");
 		for (int i = 1; i < input1; i++) {
@@ -110,14 +112,14 @@ public class Tape {
 		tmp.add("1");
 		
 		// Band aufüllen, damit vor und nach dem Cursor min 15 Zeichen sind
-		if(tmp.size() < 31) {
-			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
-				tmp.addFirst("1");
-			}
-			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
-				tmp.addLast("1");
-			}
-		}
+//		if(tmp.size() < 31) {
+//			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
+//				tmp.addFirst("1");
+//			}
+//			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
+//				tmp.addLast("1");
+//			}
+//		}
 		
 		return tmp;
 	}
