@@ -86,7 +86,7 @@ public class Multiplication extends Observable {
 	private void q1() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q1");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -104,7 +104,7 @@ public class Multiplication extends Observable {
 	private void q2() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q2");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("1");
@@ -123,7 +123,7 @@ public class Multiplication extends Observable {
 	private void q3() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q3");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -141,7 +141,7 @@ public class Multiplication extends Observable {
 	private void q4() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q4");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -160,7 +160,7 @@ public class Multiplication extends Observable {
 	private void q5() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q5");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -178,7 +178,7 @@ public class Multiplication extends Observable {
 	private void q6() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q6");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -196,7 +196,7 @@ public class Multiplication extends Observable {
 	private void q7() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q7");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -214,7 +214,7 @@ public class Multiplication extends Observable {
 	private void q8() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q8");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -232,7 +232,7 @@ public class Multiplication extends Observable {
 	private void q9() throws InterruptedException {
 		setChanged();
 		counter++;
-		setCurrentState(Thread.currentThread().getStackTrace()[2].getMethodName());
+		setCurrentState("q9");
 		Thread.sleep(sleep);
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
@@ -243,8 +243,8 @@ public class Multiplication extends Observable {
 			tape.setValue("1");
 			tape.stepRight();
 			// Fertig :-)
-			notifyObservers( tape.getStack() );
 			setCurrentState("e");
+			notifyObservers( tape.getStack() );
 		}
 	}
 }

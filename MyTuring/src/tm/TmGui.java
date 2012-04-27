@@ -18,9 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class TmGui implements Observer {
-	
-	private int step;
-	
+
 	private JFrame frame;
 
 	private Container contentPane;
@@ -57,16 +55,14 @@ public class TmGui implements Observer {
 		initGui();
 		frame.pack();
 		frame.setVisible(true);
-		
-		step = 0;
 
 	}
-	
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		String counter = "" + multi.getCounter();
+		String steps = "" + multi.getCounter();
 		String state = "" + multi.getCurrentState();
-		
+
 		// Left
 		leftArea.setText("");
 		for (String n : tape.getLeftStack()) {
@@ -82,13 +78,12 @@ public class TmGui implements Observer {
 			rightArea.append(n.toString());
 		}
 		rightArea.append("1");
-		
+
 		// Rest
-		stepsField.setText(state);
-		stateField.setText(counter);
+		stepsField.setText(steps);
+		stateField.setText(state);
 		frame.pack();
 	}
-	
 
 	public void initGui() {
 		frame = new JFrame("Turing Machine");
@@ -121,8 +116,9 @@ public class TmGui implements Observer {
 		input2Field = new JTextField();
 		sleepField = new JTextField("250");
 		operatorBox = new JComboBox();
-		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
-		
+		operatorBox
+				.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
+
 		nextStepButton = new JButton("Next Step");
 		autoButton = new JButton("Auto");
 		resetButton = new JButton("Reset");
@@ -169,46 +165,46 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (step == 0) {
-				if (operatorBox.getSelectedItem().equals("*")) {
-					step++;
-					
-					// Initialize Tape
-					tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
-					// Neues Multiplikations Objekt
-					multi = new Multiplication(tape, true, Integer.parseInt(sleepField.getText().trim()));
-					// Multiplikation ausgeben
-					multi.multiply();
-					
-				}
-				if (operatorBox.getSelectedItem().equals("!")) {
-					System.out.println("Step ! nicht implementiert.");
-				}
-			} else {
-				// goto next step....
+			if (operatorBox.getSelectedItem().equals("*")) {
+
+				// Initialize Tape
+				tape = new Tape(Integer.parseInt(input1Field.getText()),
+						Integer.parseInt(input2Field.getText()));
+				// Neues Multiplikations Objekt
+				multi = new Multiplication(tape, true,
+						Integer.parseInt(sleepField.getText().trim()));
+				// Multiplikation ausgeben
+				multi.multiply();
+
+			}
+			if (operatorBox.getSelectedItem().equals("!")) {
+				System.out.println("Step ! nicht implementiert.");
 			}
 		}
 	}
 
 	private class AutoActionListener implements ActionListener {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-			    new Thread(new Runnable() {
-			        public void run() {
-        				// Initialize Tape
-        				tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
-        				// Neues Multiplikations Objekt
-        				multi = new Multiplication(tape, false, Integer.parseInt(sleepField.getText().trim()));
-        				multi.addObserver(me);
-        				// Multiplikation ausgeben
-        				multi.multiply();
-			        };
-			    }).start();
+				new Thread(new Runnable() {
+					public void run() {
+						// Initialize Tape
+						tape = new Tape(
+								Integer.parseInt(input1Field.getText()),
+								Integer.parseInt(input2Field.getText()));
+						// Neues Multiplikations Objekt
+						multi = new Multiplication(tape, false,
+								Integer.parseInt(sleepField.getText().trim()));
+						multi.addObserver(me);
+						// Multiplikation ausgeben
+						multi.multiply();
+					};
+				}).start();
 			}
-			
+
 			// Fakult√§t
 			if (operatorBox.getSelectedItem().equals("!")) {
 				System.out.println("! nicht implementiert.");
@@ -231,6 +227,5 @@ public class TmGui implements Observer {
 		}
 
 	}
-
 
 }
