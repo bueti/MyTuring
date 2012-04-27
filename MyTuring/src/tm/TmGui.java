@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -49,6 +50,8 @@ public class TmGui implements Observer {
 	private Faculty faculty;
 	private Tape tape;
 	private TmGui me;
+	private String mode;
+	private boolean suspended;
 
 	public TmGui() {
 		me = this;
@@ -58,8 +61,7 @@ public class TmGui implements Observer {
 
 	}
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
+	public void updateGui() {
 		String steps = "" + multi.getCounter();
 		String state = "" + multi.getCurrentState();
 
@@ -83,6 +85,48 @@ public class TmGui implements Observer {
 		stepsField.setText(steps);
 		stateField.setText(state);
 		frame.pack();
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		if (mode.equals("auto")) {
+			updateGui();
+		} else if (mode.equals("step")) {
+			//JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+			
+			while (suspended) {
+				 // Do nothing
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			updateGui();
+
+		}
+
+	}
+
+	public void startMulti() {
+		new Thread(new Runnable() {
+			public void run() {
+				// Initialize Tape
+				tape = new Tape(Integer.parseInt(input1Field.getText()),
+						Integer.parseInt(input2Field.getText()));
+				// Neues Multiplikations Objekt
+				multi = new Multiplication(tape,
+						Integer.parseInt(sleepField.getText().trim()));
+				multi.addObserver(me);
+				// Multiplikation ausgeben
+				multi.multiply();
+			};
+		}).start();
+	}
+
+	public void startFaculty() {
+		System.out.println("! nicht implementiert.");
 	}
 
 	public void initGui() {
@@ -145,7 +189,7 @@ public class TmGui implements Observer {
 		centerPane.add(input2Label);
 		centerPane.add(input2Field);
 
-		// S√ºden
+		// Süden
 		southPane.add(nextStepButton);
 		southPane.add(autoButton);
 		southPane.add(resetButton);
@@ -165,49 +209,35 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			mode = "step";
+			suspended = false;
+			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-
-				// Initialize Tape
-				tape = new Tape(Integer.parseInt(input1Field.getText()),
-						Integer.parseInt(input2Field.getText()));
-				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape, true,
-						Integer.parseInt(sleepField.getText().trim()));
-				// Multiplikation ausgeben
-				multi.multiply();
-
+				startMulti();
 			}
+			suspended = true;
+
+			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				System.out.println("Step ! nicht implementiert.");
+				startFaculty();
 			}
 		}
+
 	}
 
 	private class AutoActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			mode = "auto";
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-				new Thread(new Runnable() {
-					public void run() {
-						// Initialize Tape
-						tape = new Tape(
-								Integer.parseInt(input1Field.getText()),
-								Integer.parseInt(input2Field.getText()));
-						// Neues Multiplikations Objekt
-						multi = new Multiplication(tape, false,
-								Integer.parseInt(sleepField.getText().trim()));
-						multi.addObserver(me);
-						// Multiplikation ausgeben
-						multi.multiply();
-					};
-				}).start();
+				startMulti();
 			}
 
-			// Fakult√§t
+			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				System.out.println("! nicht implementiert.");
+				startFaculty();
 			}
 		}
 
