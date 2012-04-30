@@ -38,7 +38,7 @@ public class Multiplication extends Observable {
 				q8();
 			if (nextState.equals("q9"))
 				q9();
-			if(state.equals("e")) {
+			if(nextState.equals("e")) {
 				return false;
 			}
 			notifyObservers(tape.getStack());
