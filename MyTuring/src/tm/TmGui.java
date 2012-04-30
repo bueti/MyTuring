@@ -182,8 +182,7 @@ public class TmGui implements Observer {
 		input2Field = new JTextField();
 		sleepField = new JTextField("250");
 		operatorBox = new JComboBox();
-		operatorBox
-				.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
+		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
 
 		nextStepButton = new JButton("Next Step");
 		autoButton = new JButton("Auto");
@@ -293,6 +292,15 @@ public class TmGui implements Observer {
 			valueArea.setText("");
 			rightArea.setText("");
 			sleepField.setText("250");
+			try {
+				stateImage = ImageIO.read(new File("./images/q0.png"));
+				stateImageLabel.setIcon(new ImageIcon( stateImage ));
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 	}
