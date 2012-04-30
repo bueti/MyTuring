@@ -31,13 +31,13 @@ public class Tape {
 	private void initializeTape(int input1, int input2) {
 
 		// Convert input to unary and fill tape
-		setValue("0");
+		setValue("1");
 		for (int i = 1; i < input1; i++) {
-			rightStack.add("0");
+			rightStack.add("1");
 		}
-		rightStack.add("1");
+		rightStack.add("$");
 		for (int i = 1; i <= input2; i++) {
-			rightStack.add("0");
+			rightStack.add("1");
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Tape {
 	public void stepRight() {
 		leftStack.add(getValue());
 		if (rightStack.isEmpty()) {
-			rightStack.add("1");
+			rightStack.add("$");
 		}
 		setValue(rightStack.getFirst());
 		
@@ -88,7 +88,7 @@ public class Tape {
 	public String stepLeft() {
 		rightStack.push(getValue());
 		if (leftStack.isEmpty()) {
-			leftStack.add("1");
+			leftStack.add("$");
 		}
 		setValue(leftStack.pollLast());
 		
@@ -122,7 +122,7 @@ public class Tape {
 		for (String item : rightStack) {
 			tmp.add(item);
 		}
-		tmp.add("1");
+		tmp.add("$");
 		
 		// Band aufüllen, damit vor und nach dem Cursor min 15 Zeichen sind
 //		if(tmp.size() < 31) {

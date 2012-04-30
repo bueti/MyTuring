@@ -70,13 +70,13 @@ public class Multiplication extends Observable {
 	private void q0() {
 		counter++;
 		setState("q0");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("1");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("$");
 			tape.stepRight();
 			setState("q1");
 		} else {
 
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
 			setState("q9");
 		}
@@ -85,12 +85,12 @@ public class Multiplication extends Observable {
 	private void q1() {
 		counter++;
 		setState("q1");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.stepRight();
 			setState("q1");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.stepRight();
 			setState("q2");
 		}
@@ -99,12 +99,12 @@ public class Multiplication extends Observable {
 	private void q2() {
 		counter++;
 		setState("q2");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("1");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("$");
 			tape.stepRight();
 			setState("q3");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
 			setState("q7");
 		}
@@ -113,12 +113,12 @@ public class Multiplication extends Observable {
 	private void q3() {
 		counter++;
 		setState("q3");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.stepRight();
 			setState("q3");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.stepRight();
 			setState("q4");
 		}
@@ -127,13 +127,13 @@ public class Multiplication extends Observable {
 	private void q4() {
 		counter++;
 		setState("q4");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.stepRight();
 			setState("q4");
 		} else {
 
-			tape.setValue("0");
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q5");
 		}
@@ -142,12 +142,12 @@ public class Multiplication extends Observable {
 	private void q5() {
 		counter++;
 		setState("q5");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q5");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
 			setState("q6");
 		}
@@ -156,12 +156,12 @@ public class Multiplication extends Observable {
 	private void q6() {
 		counter++;
 		setState("q6");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q6");
 		} else {
-			tape.setValue("0");
+			tape.setValue("1");
 			tape.stepRight();
 			setState("q2");
 		}
@@ -170,12 +170,12 @@ public class Multiplication extends Observable {
 	private void q7() {
 		counter++;
 		setState("q7");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q7");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
 			setState("q8");
 		}
@@ -184,12 +184,12 @@ public class Multiplication extends Observable {
 	private void q8() {
 		counter++;
 		setState("q8");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q8");
 		} else {
-			tape.setValue("0");
+			tape.setValue("1");
 			tape.stepRight();
 			setState("q0");
 		}
@@ -198,12 +198,12 @@ public class Multiplication extends Observable {
 	private void q9() {
 		counter++;
 		setState("q9");
-		if (tape.getValue().equals("0")) {
-			tape.setValue("0");
+		if (tape.getValue().equals("1")) {
+			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			setState("q9");
 		} else {
-			tape.setValue("1");
+			tape.setValue("$");
 			tape.stepRight();
 			// Fertig :-)
 			setState("e");
