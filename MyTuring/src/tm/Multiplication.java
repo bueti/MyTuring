@@ -8,7 +8,6 @@ public class Multiplication extends Observable {
 	private Tape tape;
 	private int counter;
 	private String state;
-	private int sleep;
 
 	public Multiplication(Tape tape) {
 		this.tape = tape;
@@ -17,7 +16,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	public boolean step(String nextState) throws InterruptedException {
+	public boolean step(String nextState) {
 			setChanged();
 			if (nextState.equals("q0"))
 				q0();
@@ -68,7 +67,7 @@ public class Multiplication extends Observable {
 	 * 
 	 * @throws InterruptedException
 	 */
-	private void q0() throws InterruptedException {
+	private void q0() {
 		counter++;
 		setState("q0");
 		if (tape.getValue().equals("0")) {
@@ -83,7 +82,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q1() throws InterruptedException {
+	private void q1() {
 		counter++;
 		setState("q1");
 		if (tape.getValue().equals("0")) {
@@ -97,7 +96,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q2() throws InterruptedException {
+	private void q2() {
 		counter++;
 		setState("q2");
 		if (tape.getValue().equals("0")) {
@@ -111,7 +110,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q3() throws InterruptedException {
+	private void q3() {
 		counter++;
 		setState("q3");
 		if (tape.getValue().equals("0")) {
@@ -125,7 +124,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q4() throws InterruptedException {
+	private void q4() {
 		counter++;
 		setState("q4");
 		if (tape.getValue().equals("0")) {
@@ -140,7 +139,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q5() throws InterruptedException {
+	private void q5() {
 		counter++;
 		setState("q5");
 		if (tape.getValue().equals("0")) {
@@ -154,7 +153,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q6() throws InterruptedException {
+	private void q6() {
 		counter++;
 		setState("q6");
 		if (tape.getValue().equals("0")) {
@@ -168,7 +167,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q7() throws InterruptedException {
+	private void q7() {
 		counter++;
 		setState("q7");
 		if (tape.getValue().equals("0")) {
@@ -182,7 +181,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q8() throws InterruptedException {
+	private void q8() {
 		counter++;
 		setState("q8");
 		if (tape.getValue().equals("0")) {
@@ -196,7 +195,7 @@ public class Multiplication extends Observable {
 		}
 	}
 
-	private void q9() throws InterruptedException {
+	private void q9() {
 		counter++;
 		setState("q9");
 		if (tape.getValue().equals("0")) {

@@ -14,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -102,8 +101,8 @@ public class TmGui implements Observer {
 				// Multiplikation ausgeben
 				try {
 					while (multi.step(multi.getState())) {
-						Thread.sleep(Integer.parseInt(sleepField
-								.getText().trim()));
+						Thread.sleep(Integer.parseInt(sleepField.getText()
+								.trim()));
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -118,12 +117,7 @@ public class TmGui implements Observer {
 
 				multi.addObserver(me);
 				// Multiplikation ausgeben
-				try {
-					multi.step(multi.getState());
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				multi.step(multi.getState());
 			};
 		}).start();
 	}

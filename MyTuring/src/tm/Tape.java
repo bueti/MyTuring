@@ -1,7 +1,6 @@
 package tm;
 
 import java.util.LinkedList;
-import java.util.Observable;
 
 public class Tape {
 
