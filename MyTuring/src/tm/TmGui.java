@@ -50,8 +50,6 @@ public class TmGui implements Observer {
 	private Faculty faculty;
 	private Tape tape;
 	private TmGui me;
-	private String mode;
-	private boolean suspended;
 
 	public TmGui() {
 		me = this;
@@ -63,7 +61,7 @@ public class TmGui implements Observer {
 
 	public void updateGui() {
 		String steps = "" + multi.getCounter();
-		String state = "" + multi.getCurrentState();
+		String state = "" + multi.getState();
 
 		// Left
 		leftArea.setText("");
@@ -89,38 +87,43 @@ public class TmGui implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		if (mode.equals("auto")) {
-			updateGui();
-		} else if (mode.equals("step")) {
-			//JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
-			
-			while (suspended) {
-				 // Do nothing
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			updateGui();
-
-		}
-
+		updateGui();
 	}
 
-	public void startMulti() {
+	public void startMultiAuto() {
 		new Thread(new Runnable() {
 			public void run() {
 				// Initialize Tape
 				tape = new Tape(Integer.parseInt(input1Field.getText()),
 						Integer.parseInt(input2Field.getText()));
 				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape,
-						Integer.parseInt(sleepField.getText().trim()));
+				multi = new Multiplication(tape);
 				multi.addObserver(me);
 				// Multiplikation ausgeben
-				multi.multiply();
+				try {
+					while (multi.step(multi.getState())) {
+						Thread.sleep(Integer.parseInt(sleepField
+								.getText().trim()));
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			};
+		}).start();
+	}
+
+	public void startMultiSingle() {
+		new Thread(new Runnable() {
+			public void run() {
+
+				multi.addObserver(me);
+				// Multiplikation ausgeben
+				try {
+					multi.step(multi.getState());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			};
 		}).start();
 	}
@@ -209,13 +212,19 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			mode = "step";
-			suspended = false;
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-				startMulti();
+				// Initialize Tape
+				if (tape == null) {
+					tape = new Tape(Integer.parseInt(input1Field.getText()),
+							Integer.parseInt(input2Field.getText()));
+				}
+				// Neues Multiplikations Objekt
+				if (multi == null) {
+					multi = new Multiplication(tape);
+				}
+				startMultiSingle();
 			}
-			suspended = true;
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
@@ -229,10 +238,9 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			mode = "auto";
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-				startMulti();
+				startMultiAuto();
 			}
 
 			// Fakultät
@@ -250,6 +258,7 @@ public class TmGui implements Observer {
 			input1Field.setText("");
 			input2Field.setText("");
 			stepsField.setText("");
+			stateField.setText("");
 			leftArea.setText("");
 			valueArea.setText("");
 			rightArea.setText("");

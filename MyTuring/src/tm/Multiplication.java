@@ -10,29 +10,48 @@ public class Multiplication extends Observable {
 	private String state;
 	private int sleep;
 
-	public Multiplication(Tape tape, int sleep) {
+	public Multiplication(Tape tape) {
 		this.tape = tape;
-		this.sleep = sleep;
-		setCounter(0);
-	}
-
-	public void multiply() {
-		// Now multiply this shit...
-		try {
-			// Obs
-			setChanged();
-			q0();
-			notifyObservers(tape.getStack());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (state == null) {
+			state = "q0";
 		}
 	}
 
-	public String getCurrentState() {
+	public boolean step(String nextState) throws InterruptedException {
+			setChanged();
+			if (nextState.equals("q0"))
+				q0();
+			if (nextState.equals("q1"))
+				q1();
+			if (nextState.equals("q2"))
+				q2();
+			if (nextState.equals("q3"))
+				q3();
+			if (nextState.equals("q4"))
+				q4();
+			if (nextState.equals("q5"))
+				q5();
+			if (nextState.equals("q6"))
+				q6();
+			if (nextState.equals("q7"))
+				q7();
+			if (nextState.equals("q8"))
+				q8();
+			if (nextState.equals("q9"))
+				q9();
+			if(state.equals("e")) {
+				return false;
+			}
+			notifyObservers(tape.getStack());
+		
+		return true;
+	}
+
+	public String getState() {
 		return state;
 	}
 
-	private void setCurrentState(String state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
@@ -50,186 +69,145 @@ public class Multiplication extends Observable {
 	 * @throws InterruptedException
 	 */
 	private void q0() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q0");
-		Thread.sleep(sleep);
+		setState("q0");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("1");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q1();
+			setState("q1");
 		} else {
 
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q9();
+			setState("q9");
 		}
 	}
 
 	private void q1() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q1");
-		Thread.sleep(sleep);
+		setState("q1");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q1();
+			setState("q1");
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q2();
+			setState("q2");
 		}
 	}
 
 	private void q2() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q2");
-		Thread.sleep(sleep);
+		setState("q2");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("1");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q3();
+			setState("q3");
 		} else {
-
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q7();
+			setState("q7");
 		}
 	}
 
 	private void q3() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q3");
-		Thread.sleep(sleep);
+		setState("q3");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q3();
+			setState("q3");
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q4();
+			setState("q4");
 		}
 	}
 
 	private void q4() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q4");
-		Thread.sleep(sleep);
+		setState("q4");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q4();
+			setState("q4");
 		} else {
 
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q5();
+			setState("q5");
 		}
 	}
 
 	private void q5() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q5");
-		Thread.sleep(sleep);
+		setState("q5");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q5();
+			setState("q5");
 		} else {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q6();
+			setState("q6");
 		}
 	}
 
 	private void q6() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q6");
-		Thread.sleep(sleep);
+		setState("q6");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q6();
+			setState("q6");
 		} else {
 			tape.setValue("0");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q2();
+			setState("q2");
 		}
 	}
 
 	private void q7() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q7");
-		Thread.sleep(sleep);
+		setState("q7");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q7();
+			setState("q7");
 		} else {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q8();
+			setState("q8");
 		}
 	}
 
 	private void q8() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q8");
-		Thread.sleep(sleep);
+		setState("q8");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q8();
+			setState("q8");
 		} else {
 			tape.setValue("0");
 			tape.stepRight();
-			notifyObservers(tape.getStack());
-			q0();
+			setState("q0");
 		}
 	}
 
 	private void q9() throws InterruptedException {
-		setChanged();
 		counter++;
-		setCurrentState("q9");
-		Thread.sleep(sleep);
+		setState("q9");
 		if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.setValue(tape.stepLeft());
-			notifyObservers(tape.getStack());
-			q9();
+			setState("q9");
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
 			// Fertig :-)
-			setCurrentState("e");
-			notifyObservers(tape.getStack());
+			setState("e");
 		}
 	}
 }
