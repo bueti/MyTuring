@@ -53,7 +53,7 @@ public class TmGui implements Observer {
 	private JLabel stateImageLabel;
 
 	private Multiplication multi;
-	private Faculty faculty;
+	private Factorial faculty;
 	private Tape tape;
 	private TmGui me;
 
@@ -144,7 +144,7 @@ public class TmGui implements Observer {
 		}).start();
 	}
 
-	public void startFaculty() {
+	public void startFactorial() {
 		System.out.println("! nicht implementiert.");
 	}
 
@@ -257,7 +257,7 @@ public class TmGui implements Observer {
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				startFaculty();
+				startFactorial();
 			}
 		}
 
@@ -274,7 +274,7 @@ public class TmGui implements Observer {
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				startFaculty();
+				startFactorial();
 			}
 		}
 

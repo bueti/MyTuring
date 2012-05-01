@@ -64,8 +64,6 @@ public class Multiplication extends Observable {
 
 	/**
 	 * States for multiplying with tm
-	 * 
-	 * @throws InterruptedException
 	 */
 	private void q0() {
 		counter++;
