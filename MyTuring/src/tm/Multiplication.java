@@ -6,14 +6,11 @@ public class Multiplication extends Observable {
 
 	// "Unendliches" Turingband
 	private Tape tape;
-	private int counter;
-	private String state;
+	private Machine tm;
 
-	public Multiplication(Tape tape) {
+	public Multiplication(Tape tape, Machine machine) {
 		this.tape = tape;
-		if (state == null) {
-			state = "q0";
-		}
+		this.tm = machine;
 	}
 
 	public boolean step(String nextState) {
@@ -41,170 +38,154 @@ public class Multiplication extends Observable {
 			if(nextState.equals("e")) {
 				return false;
 			}
-			notifyObservers(tape.getStack());
+			notifyObservers();
 		
 		return true;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public int getCounter() {
-		return counter;
-	}
-
-	public void setCounter(int counter) {
-		this.counter = counter;
 	}
 
 	/**
 	 * States for multiplying with tm
 	 */
 	private void q0() {
-		counter++;
-		setState("q0");
+		tm.incCounter();;
+		tm.setState("q0");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("$");
 			tape.stepRight();
-			setState("q1");
+			tm.setState("q1");
 		} else {
 
 			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
-			setState("q9");
+			tm.setState("q9");
 		}
 	}
 
 	private void q1() {
-		counter++;
-		setState("q1");
+		tm.incCounter();;
+		tm.setState("q1");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.stepRight();
-			setState("q1");
+			tm.setState("q1");
 		} else {
 			tape.setValue("$");
 			tape.stepRight();
-			setState("q2");
+			tm.setState("q2");
 		}
 	}
 
 	private void q2() {
-		counter++;
-		setState("q2");
+		tm.incCounter();;
+		tm.setState("q2");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("$");
 			tape.stepRight();
-			setState("q3");
+			tm.setState("q3");
 		} else {
 			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
-			setState("q7");
+			tm.setState("q7");
 		}
 	}
 
 	private void q3() {
-		counter++;
-		setState("q3");
+		tm.incCounter();;
+		tm.setState("q3");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.stepRight();
-			setState("q3");
+			tm.setState("q3");
 		} else {
 			tape.setValue("$");
 			tape.stepRight();
-			setState("q4");
+			tm.setState("q4");
 		}
 	}
 
 	private void q4() {
-		counter++;
-		setState("q4");
+		tm.incCounter();;
+		tm.setState("q4");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.stepRight();
-			setState("q4");
+			tm.setState("q4");
 		} else {
 
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q5");
+			tm.setState("q5");
 		}
 	}
 
 	private void q5() {
-		counter++;
-		setState("q5");
+		tm.incCounter();;
+		tm.setState("q5");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q5");
+			tm.setState("q5");
 		} else {
 			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
-			setState("q6");
+			tm.setState("q6");
 		}
 	}
 
 	private void q6() {
-		counter++;
-		setState("q6");
+		tm.incCounter();;
+		tm.setState("q6");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q6");
+			tm.setState("q6");
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
-			setState("q2");
+			tm.setState("q2");
 		}
 	}
 
 	private void q7() {
-		counter++;
-		setState("q7");
+		tm.incCounter();;
+		tm.setState("q7");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q7");
+			tm.setState("q7");
 		} else {
 			tape.setValue("$");
 			tape.setValue(tape.stepLeft());
-			setState("q8");
+			tm.setState("q8");
 		}
 	}
 
 	private void q8() {
-		counter++;
-		setState("q8");
+		tm.incCounter();;
+		tm.setState("q8");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q8");
+			tm.setState("q8");
 		} else {
 			tape.setValue("1");
 			tape.stepRight();
-			setState("q0");
+			tm.setState("q0");
 		}
 	}
 
 	private void q9() {
-		counter++;
-		setState("q9");
+		tm.incCounter();;
+		tm.setState("q9");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q9");
+			tm.setState("q9");
 		} else {
 			tape.setValue("$");
 			tape.stepRight();
 			// Fertig :-)
-			setState("e");
+			tm.setState("e");
 		}
 	}
 }

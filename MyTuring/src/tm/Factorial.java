@@ -5,14 +5,11 @@ import java.util.Observable;
 public class Factorial extends Observable {
 	// "Unendliches" Turingband
 	private Tape tape;
-	private int counter;
-	private String state;
+	private Machine machine;
 
-	public Factorial(Tape tape) {
+	public Factorial(Tape tape, Machine machine) {
 		this.tape = tape;
-		if (state == null) {
-			state = "q1";
-		}
+		this.machine = machine;
 	}
 
 	public boolean step(String nextState) {
@@ -35,30 +32,30 @@ public class Factorial extends Observable {
 			q8();
 		if (nextState.equals("q9"))
 			q9();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q10"))
 			q10();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q11"))
 			q11();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q12"))
 			q12();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q13"))
 			q13();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q14"))
 			q14();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q15"))
 			q15();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q16"))
 			q16();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q17"))
 			q17();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q18"))
 			q18();
-		if (nextState.equals("q9"))
+		if (nextState.equals("q19"))
 			q19();
 		if (nextState.equals("e")) {
 			return false;
 		}
-		notifyObservers(tape.getStack());
+		notifyObservers();
 
 		return true;
 	}
@@ -144,65 +141,49 @@ public class Factorial extends Observable {
 	}
 
 	private void q3() {
-		counter++;
-		setState("q3");
+		machine.incCounter();
+		machine.setState("q3");
 		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=")) {
 			tape.setValue(tape.getValue());
 			tape.setValue(tape.stepLeft());
-			setState("q3");
+			machine.setState("q3");
 		} else if (tape.getValue().equals("X")) {
 			tape.setValue("X");
 			tape.stepRight();
-			setState("q1");
+			machine.setState("q1");
 		}
 	}
 
 	private void q2() {
-		counter++;
-		setState("q2");
+		machine.incCounter();
+		machine.setState("q2");
 		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=")) {
 			tape.setValue(tape.getValue());
 			tape.stepRight();
-			setState("q2");
+			machine.setState("q2");
 		} else if (tape.getValue().equals("_")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
-			setState("q3");
+			machine.setState("q3");
 		}
 	}
 
 	private void q1() {
-		counter++;
-		setState("q1");
+		machine.incCounter();
+		machine.setState("q1");
 		if (tape.getValue().equals("1")) {
 			tape.setValue("X");
 			tape.stepRight();
-			setState("q2");
+			machine.setState("q2");
 		} else if (tape.getValue().equals("!")) {
 			tape.setValue("!");
 			tape.stepRight();
-			setState("q4");
+			machine.setState("q4");
 		} else if (tape.getValue().equals("0")) {
 			tape.setValue("0");
 			tape.stepRight();
-			setState("q19");
+			machine.setState("q19");
 		}
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public int getCounter() {
-		return counter;
-	}
-
-	public void setCounter(int counter) {
-		this.counter = counter;
 	}
 
 }

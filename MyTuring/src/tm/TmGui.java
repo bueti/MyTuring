@@ -56,9 +56,9 @@ public class TmGui implements Observer {
 	private Factorial fact;
 	private Tape tape;
 	private TmGui me;
+	private Machine machine;
 
 	private Container southNorthPane;
-
 	private Container southSouthPane;
 
 	public TmGui() {
@@ -71,8 +71,8 @@ public class TmGui implements Observer {
 
 	public void updateGui() {
 		// TODO: Multi Auslagern
-		String steps = "" + multi.getCounter();
-		String state = "" + multi.getState();
+		String steps = "" + machine.getCounter();
+		String state = "" + machine.getState();
 
 		// Left
 		leftArea.setText("");
@@ -96,7 +96,7 @@ public class TmGui implements Observer {
 		
 		// Bild
 		try {
-			stateImage = ImageIO.read(new File("./images/" + multi.getState() +".png"));
+			stateImage = ImageIO.read(new File("./images/" + machine.getState() +".png"));
 			stateImageLabel.setIcon(new ImageIcon( stateImage ));
 			
 		} catch (IOException e) {
@@ -116,14 +116,15 @@ public class TmGui implements Observer {
 		new Thread(new Runnable() {
 			public void run() {
 				// Initialize Tape
+				machine = new Machine("q0");
 				tape = new Tape(Integer.parseInt(input1Field.getText()),
 						Integer.parseInt(input2Field.getText()));
 				// Neues Multiplikations Objekt
-				multi = new Multiplication(tape);
+				multi = new Multiplication(tape, machine);
 				multi.addObserver(me);
 				// Multiplikation ausgeben
 				try {
-					while (multi.step(multi.getState())) {
+					while (multi.step(machine.getState())) {
 						Thread.sleep(Integer.parseInt(sleepField.getText()
 								.trim()));
 					}
@@ -140,7 +141,7 @@ public class TmGui implements Observer {
 
 				multi.addObserver(me);
 				// Multiplikation ausgeben
-				multi.step(multi.getState());
+				multi.step(machine.getState());
 			};
 		}).start();
 	}
@@ -148,14 +149,15 @@ public class TmGui implements Observer {
 	public void startFactorialAuto() {
 		new Thread(new Runnable() {
 			public void run() {
+				machine = new Machine("q1");
 				// Initialize Tape
 				tape = new Tape(Integer.parseInt(input1Field.getText()));
 				// Neues Multiplikations Objekt
-				fact = new Factorial(tape);
+				fact = new Factorial(tape, machine);
 				fact.addObserver(me);
 				// Multiplikation ausgeben
 				try {
-					while (fact.step(fact.getState())) {
+					while (fact.step(machine.getState())) {
 						Thread.sleep(Integer.parseInt(sleepField.getText()
 								.trim()));
 					}
@@ -172,7 +174,7 @@ public class TmGui implements Observer {
 
 				fact.addObserver(me);
 				// Multiplikation ausgeben
-				fact.step(fact.getState());
+				fact.step(machine.getState());
 			};
 		}).start();
 	}
@@ -272,28 +274,29 @@ public class TmGui implements Observer {
 		public void actionPerformed(ActionEvent arg0) {
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
-				// Initialize Tape
-				if (tape == null) {
-					tape = new Tape(Integer.parseInt(input1Field.getText()),
-							Integer.parseInt(input2Field.getText()));
-				}
-				// Neues Multiplikations Objekt
-				if (multi == null) {
-					multi = new Multiplication(tape);
-				}
+				// Initialize Machine, Tape and Multiplication if not already done
+				if (machine == null)
+					machine = new Machine("q0");
+				if (tape == null)
+					tape = new Tape(Integer.parseInt(input1Field.getText()), Integer.parseInt(input2Field.getText()));
+				if (multi == null)
+					multi = new Multiplication(tape, machine);
+
+				// Start Multiplication	
 				startMultiSingle();
 			}
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				// Initialize Tape
+				if (machine == null)
+					machine = new Machine("q1");
 				if (tape == null) {
 					tape = new Tape(Integer.parseInt(input1Field.getText()));
 				}
-				// Neues Multiplikations Objekt
-				if (fact == null) {
-					fact = new Factorial(tape);
-				}
+				if (fact == null)
+					fact = new Factorial(tape, machine);
+			
+				// Start Factorial	
 				startFactorialSingle();
 			}
 		}
@@ -311,7 +314,7 @@ public class TmGui implements Observer {
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				startFactorialSingle();
+				startFactorialAuto();
 			}
 		}
 
