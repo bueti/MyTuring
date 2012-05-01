@@ -144,27 +144,48 @@ public class Factorial extends Observable {
 	}
 
 	private void q3() {
-		// TODO Auto-generated method stub
-
+		counter++;
+		setState("q3");
+		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.setValue(tape.stepLeft());
+			setState("q3");
+		} else if (tape.getValue().equals("X")) {
+			tape.setValue("X");
+			tape.stepRight();
+			setState("q1");
+		}
 	}
 
 	private void q2() {
-		// TODO Auto-generated method stub
-
+		counter++;
+		setState("q2");
+		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			setState("q2");
+		} else if (tape.getValue().equals("_")) {
+			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
+			setState("q3");
+		}
 	}
 
 	private void q1() {
-		// TODO Auto-generated method stub
 		counter++;
 		setState("q1");
 		if (tape.getValue().equals("1")) {
-			tape.setValue("$");
+			tape.setValue("X");
 			tape.stepRight();
-			setState("q1");
-		} else {
-			tape.setValue("$");
-			tape.setValue(tape.stepLeft());
-			setState("q9");
+			setState("q2");
+		} else if (tape.getValue().equals("!")) {
+			tape.setValue("!");
+			tape.stepRight();
+			setState("q4");
+		} else if (tape.getValue().equals("0")) {
+			tape.setValue("0");
+			tape.stepRight();
+			setState("q19");
 		}
 	}
 

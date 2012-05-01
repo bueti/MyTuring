@@ -70,6 +70,7 @@ public class TmGui implements Observer {
 	}
 
 	public void updateGui() {
+		// TODO: Multi Auslagern
 		String steps = "" + multi.getCounter();
 		String state = "" + multi.getState();
 
@@ -171,7 +172,7 @@ public class TmGui implements Observer {
 
 				fact.addObserver(me);
 				// Multiplikation ausgeben
-				fact.step(multi.getState());
+				fact.step(fact.getState());
 			};
 		}).start();
 	}
