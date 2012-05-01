@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class TmGui implements Observer {
 
@@ -109,7 +110,16 @@ public class TmGui implements Observer {
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		updateGui();
+	    try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    updateGui();	            
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 	public void startMultiAuto() {
@@ -138,7 +148,6 @@ public class TmGui implements Observer {
 	public void startMultiSingle() {
 		new Thread(new Runnable() {
 			public void run() {
-				frame.pack();
 				multi.addObserver(me);
 				// Multiplikation ausgeben
 				multi.step(machine.getState());
@@ -171,7 +180,6 @@ public class TmGui implements Observer {
 	public void startFactorialSingle() {
 		new Thread(new Runnable() {
 			public void run() {
-				frame.pack();
 				fact.addObserver(me);
 				// Multiplikation ausgeben
 				fact.step(machine.getState());
@@ -267,6 +275,8 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			autoButton.setEnabled(false);
+			resetButton.setEnabled(false);
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
 				type = "multi";
@@ -292,6 +302,8 @@ public class TmGui implements Observer {
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
 				type = "fact";
+				input2Field.setVisible(false);
+				input2Label.setVisible(false);
 				if (machine == null)
 					machine = new Machine("q1");
 				if (tape == null) {
@@ -307,7 +319,6 @@ public class TmGui implements Observer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				frame.pack();
 				// Start Factorial	
 				startFactorialSingle();
 			}
@@ -319,6 +330,9 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			autoButton.setEnabled(false);
+			resetButton.setEnabled(false);
+			nextStepButton.setEnabled(false);
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
 				type = "multi";
@@ -330,7 +344,6 @@ public class TmGui implements Observer {
 					e.printStackTrace();
 				}
 				stateImageLabel.setVisible(true);
-				frame.pack();
 				// Multiplikation starten
 				startMultiAuto();
 			}
@@ -338,15 +351,16 @@ public class TmGui implements Observer {
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
 				type = "fact";
+				input2Field.setVisible(false);
+				input2Label.setVisible(false);
 				// Bild laden
 				try {
-					stateImage = ImageIO.read(new File("./images/" + type + "/q0.png"));
+					stateImage = ImageIO.read(new File("./images/" + type + "/q1.png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				stateImageLabel.setVisible(true);
-				frame.pack();
 				// Fakultät starten
 				startFactorialAuto();
 			}
