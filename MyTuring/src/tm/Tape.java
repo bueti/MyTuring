@@ -114,20 +114,6 @@ public class Tape {
 	}
 
 	/**
-	 * Gibt die einzelnen Stacks aus, gut zum Debuggen
-	 */
-	public void printStacks() {
-		for (String item : leftStack) {
-			System.out.print(item);
-		}
-		System.out.print(value);
-		for (String item : rightStack) {
-			System.out.print(item);
-		}
-		System.out.println("");
-	}
-	
-	/**
 	 * Gibt ein komplettes Band zurück
 	 * @return Band mit allem drum und dran
 	 */
@@ -141,16 +127,6 @@ public class Tape {
 			tmp.add(item);
 		}
 		tmp.add("$");
-		
-		// Band aufüllen, damit vor und nach dem Cursor min 15 Zeichen sind
-//		if(tmp.size() < 31) {
-//			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
-//				tmp.addFirst("1");
-//			}
-//			for (int i = 0; i <= (31 - tmp.size())/2; i++) {
-//				tmp.addLast("1");
-//			}
-//		}
 		
 		return tmp;
 	}

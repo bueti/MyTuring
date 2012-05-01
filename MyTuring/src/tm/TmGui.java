@@ -37,8 +37,6 @@ public class TmGui implements Observer {
 	private JButton resetButton;
 	private JLabel band1Label;
 	private JLabel stepsLabel;
-	private JLabel input1Label;
-	private JLabel input2Label;
 	private JLabel sleepLabel;
 	private JLabel stateLabel;
 	private JTextField input1Field;
@@ -76,7 +74,7 @@ public class TmGui implements Observer {
 		String state = "" + machine.getState();
 
 		// Left
-		leftArea.setText("");
+		leftArea.setText("$$$$$");
 		for (String n : tape.getLeftStack()) {
 			leftArea.append(n.toString());
 		}
@@ -89,7 +87,7 @@ public class TmGui implements Observer {
 		for (String n : tape.getRightStack()) {
 			rightArea.append(n.toString());
 		}
-		rightArea.append("1");
+		rightArea.append("$$$$$");
 
 		// Rest
 		stepsField.setText(steps);
@@ -138,6 +136,9 @@ public class TmGui implements Observer {
 						Thread.sleep(Integer.parseInt(sleepField.getText()
 								.trim()));
 					}
+					resetButton.setEnabled(true);
+					autoButton.setEnabled(true);
+					nextStepButton.setEnabled(true);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -151,6 +152,9 @@ public class TmGui implements Observer {
 				multi.addObserver(me);
 				// Multiplikation ausgeben
 				multi.step(machine.getState());
+				resetButton.setEnabled(true);
+				autoButton.setEnabled(true);
+				nextStepButton.setEnabled(true);
 			};
 		}).start();
 	}
@@ -170,6 +174,9 @@ public class TmGui implements Observer {
 						Thread.sleep(Integer.parseInt(sleepField.getText()
 								.trim()));
 					}
+					resetButton.setEnabled(true);
+					autoButton.setEnabled(true);
+					nextStepButton.setEnabled(true);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -183,6 +190,9 @@ public class TmGui implements Observer {
 				fact.addObserver(me);
 				// Multiplikation ausgeben
 				fact.step(machine.getState());
+				resetButton.setEnabled(true);
+				autoButton.setEnabled(true);
+				nextStepButton.setEnabled(true);
 			};
 		}).start();
 	}
@@ -214,8 +224,6 @@ public class TmGui implements Observer {
 		stateLabel = new JLabel("State:");
 		stateField = new JTextField("-");
 
-		input1Label = new JLabel("Input1:");
-		input2Label = new JLabel("Input2:");
 		sleepLabel = new JLabel("Speed (ms):");
 		input1Field = new JTextField();
 		input2Field = new JTextField();
@@ -246,10 +254,8 @@ public class TmGui implements Observer {
 		northPane.add(stateField);
 
 		// Zentrum
-		centerPane.add(input1Label);
 		centerPane.add(input1Field);
 		centerPane.add(operatorBox);
-		centerPane.add(input2Label);
 		centerPane.add(input2Field);
 		centerPane.setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -303,7 +309,6 @@ public class TmGui implements Observer {
 			if (operatorBox.getSelectedItem().equals("!")) {
 				type = "fact";
 				input2Field.setVisible(false);
-				input2Label.setVisible(false);
 				if (machine == null)
 					machine = new Machine("q1");
 				if (tape == null) {
@@ -352,7 +357,6 @@ public class TmGui implements Observer {
 			if (operatorBox.getSelectedItem().equals("!")) {
 				type = "fact";
 				input2Field.setVisible(false);
-				input2Label.setVisible(false);
 				// Bild laden
 				try {
 					stateImage = ImageIO.read(new File("./images/" + type + "/q1.png"));
@@ -380,8 +384,11 @@ public class TmGui implements Observer {
 			valueArea.setText("");
 			rightArea.setText("");
 			sleepField.setText("250");
-			stateImageLabel.setIcon(null);
+			stateImageLabel.setIcon(new ImageIcon("./images/turingMachine.gif"));
 			frame.pack();
+			input2Field.setVisible(true);
+			autoButton.setEnabled(true);
+			nextStepButton.setEnabled(true);
 	
 		}
 
