@@ -53,7 +53,7 @@ public class TmGui implements Observer {
 	private JLabel stateImageLabel;
 
 	private Multiplication multi;
-	private Factorial faculty;
+	private Factorial fact;
 	private Tape tape;
 	private TmGui me;
 
@@ -144,8 +144,36 @@ public class TmGui implements Observer {
 		}).start();
 	}
 
-	public void startFactorial() {
-		System.out.println("! nicht implementiert.");
+	public void startFactorialAuto() {
+		new Thread(new Runnable() {
+			public void run() {
+				// Initialize Tape
+				tape = new Tape(Integer.parseInt(input1Field.getText()));
+				// Neues Multiplikations Objekt
+				fact = new Factorial(tape);
+				fact.addObserver(me);
+				// Multiplikation ausgeben
+				try {
+					while (fact.step(fact.getState())) {
+						Thread.sleep(Integer.parseInt(sleepField.getText()
+								.trim()));
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			};
+		}).start();
+	}
+	
+	public void startFactorialSingle() {
+		new Thread(new Runnable() {
+			public void run() {
+
+				fact.addObserver(me);
+				// Multiplikation ausgeben
+				fact.step(multi.getState());
+			};
+		}).start();
 	}
 
 	public void initGui() {
@@ -257,7 +285,15 @@ public class TmGui implements Observer {
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				startFactorial();
+				// Initialize Tape
+				if (tape == null) {
+					tape = new Tape(Integer.parseInt(input1Field.getText()));
+				}
+				// Neues Multiplikations Objekt
+				if (fact == null) {
+					fact = new Factorial(tape);
+				}
+				startFactorialSingle();
 			}
 		}
 
@@ -274,7 +310,7 @@ public class TmGui implements Observer {
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
-				startFactorial();
+				startFactorialSingle();
 			}
 		}
 

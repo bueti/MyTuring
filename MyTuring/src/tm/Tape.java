@@ -23,6 +23,24 @@ public class Tape {
 		initializeTape(input1, input2);
 	}
 
+	public Tape(int input1) {
+		// TODO Auto-generated constructor stub
+		leftStack = new LinkedList<String>();
+		rightStack = new LinkedList<String>();
+		
+		initializeTape(input1);
+	}
+
+	private void initializeTape(int input1) {
+		// Convert input to unary and fill tape
+		setValue("1");
+		for (int i = 1; i < input1; i++) {
+			rightStack.add("1");
+		}
+		rightStack.add("!");
+		rightStack.add("=");
+	}
+
 	/**
 	 * Konvertiert den Input zu unär und füllt das Band
 	 * @param input1
