@@ -57,6 +57,7 @@ public class TmGui implements Observer {
 	private Tape tape;
 	private TmGui me;
 	private Machine machine;
+	private String type;
 
 	private Container southNorthPane;
 	private Container southSouthPane;
@@ -70,7 +71,6 @@ public class TmGui implements Observer {
 	}
 
 	public void updateGui() {
-		// TODO: Multi Auslagern
 		String steps = "" + machine.getCounter();
 		String state = "" + machine.getState();
 
@@ -96,7 +96,7 @@ public class TmGui implements Observer {
 		
 		// Bild
 		try {
-			stateImage = ImageIO.read(new File("./images/" + machine.getState() +".png"));
+			stateImage = ImageIO.read(new File("./images/" + type + "/" + machine.getState() +".png"));
 			stateImageLabel.setIcon(new ImageIcon( stateImage ));
 			
 		} catch (IOException e) {
@@ -138,7 +138,7 @@ public class TmGui implements Observer {
 	public void startMultiSingle() {
 		new Thread(new Runnable() {
 			public void run() {
-
+				frame.pack();
 				multi.addObserver(me);
 				// Multiplikation ausgeben
 				multi.step(machine.getState());
@@ -171,7 +171,7 @@ public class TmGui implements Observer {
 	public void startFactorialSingle() {
 		new Thread(new Runnable() {
 			public void run() {
-
+				frame.pack();
 				fact.addObserver(me);
 				// Multiplikation ausgeben
 				fact.step(machine.getState());
@@ -219,13 +219,8 @@ public class TmGui implements Observer {
 		autoButton = new JButton("Auto");
 		resetButton = new JButton("Reset");
 		
-		try {
-			stateImage = ImageIO.read(new File("./images/q0.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		stateImageLabel = new JLabel(new ImageIcon( stateImage ));
+		
+		stateImageLabel = new JLabel(new ImageIcon("./images/turingMachine.gif"));
 
 		// ActionHandlers
 		nextStepButton.addActionListener(new NextStepActionListener());
@@ -274,6 +269,7 @@ public class TmGui implements Observer {
 		public void actionPerformed(ActionEvent arg0) {
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
+				type = "multi";
 				// Initialize Machine, Tape and Multiplication if not already done
 				if (machine == null)
 					machine = new Machine("q0");
@@ -282,12 +278,20 @@ public class TmGui implements Observer {
 				if (multi == null)
 					multi = new Multiplication(tape, machine);
 
+				// Bild laden
+				try {
+					stateImage = ImageIO.read(new File("./images/" + type + "/q0.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				// Start Multiplication	
 				startMultiSingle();
 			}
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
+				type = "fact";
 				if (machine == null)
 					machine = new Machine("q1");
 				if (tape == null) {
@@ -296,6 +300,14 @@ public class TmGui implements Observer {
 				if (fact == null)
 					fact = new Factorial(tape, machine);
 			
+				// Bild laden
+				try {
+					stateImage = ImageIO.read(new File("./images/" + type + "/q1.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				frame.pack();
 				// Start Factorial	
 				startFactorialSingle();
 			}
@@ -309,11 +321,33 @@ public class TmGui implements Observer {
 		public void actionPerformed(ActionEvent arg0) {
 			// Multiplikation
 			if (operatorBox.getSelectedItem().equals("*")) {
+				type = "multi";
+				// Bild laden
+				try {
+					stateImage = ImageIO.read(new File("./images/" + type + "/q0.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				stateImageLabel.setVisible(true);
+				frame.pack();
+				// Multiplikation starten
 				startMultiAuto();
 			}
 
 			// Fakultät
 			if (operatorBox.getSelectedItem().equals("!")) {
+				type = "fact";
+				// Bild laden
+				try {
+					stateImage = ImageIO.read(new File("./images/" + type + "/q0.png"));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				stateImageLabel.setVisible(true);
+				frame.pack();
+				// Fakultät starten
 				startFactorialAuto();
 			}
 		}
@@ -332,15 +366,9 @@ public class TmGui implements Observer {
 			valueArea.setText("");
 			rightArea.setText("");
 			sleepField.setText("250");
-			try {
-				stateImage = ImageIO.read(new File("./images/q0.png"));
-				stateImageLabel.setIcon(new ImageIcon( stateImage ));
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			stateImageLabel.setIcon(null);
+			frame.pack();
+	
 		}
 
 	}

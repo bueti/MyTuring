@@ -52,7 +52,7 @@ public class Factorial extends Observable {
 			q18();
 		if (nextState.equals("q19"))
 			q19();
-		if (nextState.equals("e")) {
+		if (nextState.equals("q99")) {
 			return false;
 		}
 		notifyObservers();
@@ -61,83 +61,247 @@ public class Factorial extends Observable {
 	}
 
 	private void q19() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q19");
+		if (tape.getValue().equals("!") || tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q17");
+		} else if (tape.getValue().equals("1")) {
+			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q15");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q99");
+		}
 	}
 
 	private void q18() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q18");
+		if (tape.getValue().equals("X")) {
+			tape.setValue("Y");
+			tape.stepRight();
+			machine.setState("q17");
+		} else if (tape.getValue().equals("!")) {
+			tape.setValue("!");
+			tape.stepRight();
+			machine.setState("q16");
+		}
 	}
 
 	private void q17() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q17");
+		if (tape.getValue().equals("1") || tape.getValue().equals("=") || tape.getValue().equals("!") || tape.getValue().equals("X")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q16");
+		} else if (tape.getValue().equals("Y")) {
+			tape.setValue("Y");
+			tape.stepRight();
+			machine.setState("q18");
+		}
 	}
 
 	private void q16() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q16");
+		if (tape.getValue().equals("1") || tape.getValue().equals("=") || tape.getValue().equals("!") || tape.getValue().equals("X")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q16");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("*");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q17");
+		} else if (tape.getValue().equals("*")) {
+			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q99");
+		}
 	}
 
 	private void q15() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q15");
+		if (tape.getValue().equals("1") || tape.getValue().equals("=") || tape.getValue().equals("!")) {
+			tape.setValue(tape.getValue());
+			tape.setValue(tape.stepLeft());
+			machine.setState("q15");
+		} else if (tape.getValue().equals("Z")) {
+			tape.setValue("X");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q15");
+		} else if (tape.getValue().equals("Y")) {
+			tape.setValue("Y");
+			tape.stepRight();
+			machine.setState("q16");
+		}
 	}
 
 	private void q14() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q14");
+		if (tape.getValue().equals("*")) {
+			tape.setValue("1");
+			tape.stepRight();
+			machine.setState("q14");
+		} else if (tape.getValue().equals("1") || tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q14");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("$");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q19");
+		}
 	}
 
 	private void q13() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q13");
+		if (tape.getValue().equals("X")) {
+			tape.setValue("Y");
+			tape.stepRight();
+			machine.setState("q7");
+		} else if (tape.getValue().equals("!")) {
+			tape.setValue("!");
+			tape.stepRight();
+			machine.setState("q16");
+		}
 	}
 
 	private void q12() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q12");
+		if (tape.getValue().equals("X")) {
+			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q12");
+		} else if (tape.getValue().equals("=")) {
+			tape.setValue("=");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q5");
+		}
 	}
 
 	private void q11() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void q9() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q11");
+		if (tape.getValue().equals("*") || tape.getValue().equals("1")) {
+			tape.setValue(tape.getValue());
+			tape.setValue(tape.stepLeft());
+			machine.setState("q11");
+		} else if (tape.getValue().equals("X")) {
+			tape.setValue("X");
+			tape.stepRight();
+			machine.setState("q9");
+		}
 	}
 
 	private void q10() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q10");
+		if (tape.getValue().equals("*") || tape.getValue().equals("1")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q10");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("1");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q11");
+		}
+	}
+	
+	private void q9() {
+		machine.incCounter();
+		machine.setState("q9");
+		if (tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q9");
+		} else if (tape.getValue().equals("*")) {
+			tape.setValue("*");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q12");
+		} else if (tape.getValue().equals("1")) {
+			tape.setValue("X");
+			tape.stepRight();
+			machine.setState("q10");
+		}
 	}
 
 	private void q8() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q8");
+		if (tape.getValue().equals("1") || tape.getValue().equals("X")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q8");
+		} else if (tape.getValue().equals("!")) {
+			tape.setValue("!");
+			tape.stepRight();
+			machine.setState("q9");
+		}
 	}
 
 	private void q7() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q7");
+		if (tape.getValue().equals("X")) {
+			tape.setValue("Z");
+			tape.stepRight();
+			machine.setState("q8");
+		} else if (tape.getValue().equals("!")) {
+			tape.setValue("!");
+			tape.stepRight();
+			machine.setState("q14");
+		}
 	}
 
 	private void q6() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q6");
+		if (tape.getValue().equals("X") ) {
+			tape.setValue("Y");
+			tape.stepRight();
+			machine.setState("q13");
+		}
 	}
 
 	private void q5() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q5");
+		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=") || tape.getValue().equals("X")) {
+			tape.setValue(tape.getValue());
+			tape.setValue(tape.stepLeft());
+			machine.setState("q5");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("$");
+			tape.stepRight();
+			machine.setState("q6");
+		} else if (tape.getValue().equals("Z")) {
+			tape.setValue("Z");
+			tape.stepRight();
+			machine.setState("q7");
+		}
 	}
 
 	private void q4() {
-		// TODO Auto-generated method stub
-
+		machine.incCounter();
+		machine.setState("q4");
+		if (tape.getValue().equals("!") || tape.getValue().equals("1") || tape.getValue().equals("=")) {
+			tape.setValue(tape.getValue());
+			tape.stepRight();
+			machine.setState("q4");
+		} else if (tape.getValue().equals("$")) {
+			tape.setValue("*");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q5");
+		}
 	}
 
 	private void q3() {
@@ -161,7 +325,7 @@ public class Factorial extends Observable {
 			tape.setValue(tape.getValue());
 			tape.stepRight();
 			machine.setState("q2");
-		} else if (tape.getValue().equals("_")) {
+		} else if (tape.getValue().equals("$")) {
 			tape.setValue("1");
 			tape.setValue(tape.stepLeft());
 			machine.setState("q3");
