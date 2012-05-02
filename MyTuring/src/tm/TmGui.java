@@ -39,6 +39,8 @@ public class TmGui implements Observer {
 	private JLabel stepsLabel;
 	private JLabel sleepLabel;
 	private JLabel stateLabel;
+	private JLabel resultatLabel;
+	private JTextField resultatField;
 	private JTextField input1Field;
 	private JTextField input2Field;
 	private JTextField stepsField;
@@ -105,10 +107,26 @@ public class TmGui implements Observer {
 		
 		frame.pack();
 	}
+	
+	public void printResultat() {
+		int resultat = 0;
+		for (String n : tape.getStack()) {
+			if(n.equals("1"))
+				resultat++;
+		}
+		// Ugly Hack
+		if(type.equals("multi")) {
+			resultat = resultat - Integer.parseInt(input1Field.getText()) - Integer.parseInt(input2Field.getText());
+			resultatField.setText("" + resultat);
+		} else {
+			resultatField.setText("" + resultat);
+		}
+	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	    try {
+//	    	SwingUtilities.invokeLater(new Runnable() {
             SwingUtilities.invokeAndWait(new Runnable() {
                 @Override
                 public void run() {
@@ -139,6 +157,7 @@ public class TmGui implements Observer {
 					resetButton.setEnabled(true);
 					autoButton.setEnabled(true);
 					nextStepButton.setEnabled(true);
+					printResultat();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -177,6 +196,7 @@ public class TmGui implements Observer {
 					resetButton.setEnabled(true);
 					autoButton.setEnabled(true);
 					nextStepButton.setEnabled(true);
+					printResultat();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -223,6 +243,8 @@ public class TmGui implements Observer {
 		rightArea = new JTextArea();
 		stateLabel = new JLabel("State:");
 		stateField = new JTextField("-");
+		resultatLabel = new JLabel("Resultat:");
+		resultatField = new JTextField("-");
 
 		sleepLabel = new JLabel("Speed (ms):");
 		input1Field = new JTextField();
@@ -252,6 +274,8 @@ public class TmGui implements Observer {
 		northPane.add(stepsField);
 		northPane.add(stateLabel);
 		northPane.add(stateField);
+		northPane.add(resultatLabel);
+		northPane.add(resultatField);
 
 		// Zentrum
 		centerPane.add(input1Field);
@@ -303,6 +327,7 @@ public class TmGui implements Observer {
 				}
 				// Start Multiplication	
 				startMultiSingle();
+				printResultat();
 			}
 
 			// Fakultät
@@ -367,6 +392,7 @@ public class TmGui implements Observer {
 				stateImageLabel.setVisible(true);
 				// Fakultät starten
 				startFactorialAuto();
+				printResultat();
 			}
 		}
 
@@ -383,6 +409,7 @@ public class TmGui implements Observer {
 			leftArea.setText("");
 			valueArea.setText("");
 			rightArea.setText("");
+			resultatField.setText("");
 			sleepField.setText("250");
 			stateImageLabel.setIcon(new ImageIcon("./images/turingMachine.gif"));
 			frame.pack();
@@ -393,5 +420,4 @@ public class TmGui implements Observer {
 		}
 
 	}
-
 }
