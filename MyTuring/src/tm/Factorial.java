@@ -84,7 +84,7 @@ public class Factorial extends Observable {
 		if (tape.getValue().equals("X")) {
 			tape.setValue("Y");
 			tape.stepRight();
-			machine.setState("q17");
+			machine.setState("q7");
 		} else if (tape.getValue().equals("!")) {
 			tape.setValue("!");
 			tape.stepRight();
@@ -97,8 +97,8 @@ public class Factorial extends Observable {
 		machine.setState("q17");
 		if (tape.getValue().equals("1") || tape.getValue().equals("=") || tape.getValue().equals("!") || tape.getValue().equals("X")) {
 			tape.setValue(tape.getValue());
-			tape.stepRight();
-			machine.setState("q16");
+			tape.setValue(tape.stepLeft());
+			machine.setState("q17");
 		} else if (tape.getValue().equals("Y")) {
 			tape.setValue("Y");
 			tape.stepRight();
@@ -220,7 +220,7 @@ public class Factorial extends Observable {
 		machine.incCounter();
 		machine.setState("q9");
 		if (tape.getValue().equals("=")) {
-			tape.setValue(tape.getValue());
+			tape.setValue("=");
 			tape.stepRight();
 			machine.setState("q9");
 		} else if (tape.getValue().equals("*")) {
