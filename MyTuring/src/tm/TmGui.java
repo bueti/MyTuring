@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -39,8 +40,6 @@ public class TmGui implements Observer {
 	private JLabel stepsLabel;
 	private JLabel sleepLabel;
 	private JLabel stateLabel;
-	private JLabel resultatLabel;
-	private JTextField resultatField;
 	private JTextField input1Field;
 	private JTextField input2Field;
 	private JTextField stepsField;
@@ -117,9 +116,10 @@ public class TmGui implements Observer {
 		// Ugly Hack
 		if(type.equals("multi")) {
 			resultat = resultat - Integer.parseInt(input1Field.getText()) - Integer.parseInt(input2Field.getText());
-			resultatField.setText("" + resultat);
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat);
 		} else {
-			resultatField.setText("" + resultat);
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat);
+
 		}
 	}
 
@@ -243,13 +243,11 @@ public class TmGui implements Observer {
 		rightArea = new JTextArea();
 		stateLabel = new JLabel("State:");
 		stateField = new JTextField("-");
-		resultatLabel = new JLabel("Resultat:");
-		resultatField = new JTextField("-");
 
 		sleepLabel = new JLabel("Speed (ms):");
 		input1Field = new JTextField();
 		input2Field = new JTextField();
-		sleepField = new JTextField("250");
+		sleepField = new JTextField("0");
 		operatorBox = new JComboBox();
 		operatorBox.setModel(new DefaultComboBoxModel(new String[] { "*", "!" }));
 
@@ -274,8 +272,6 @@ public class TmGui implements Observer {
 		northPane.add(stepsField);
 		northPane.add(stateLabel);
 		northPane.add(stateField);
-		northPane.add(resultatLabel);
-		northPane.add(resultatField);
 
 		// Zentrum
 		centerPane.add(input1Field);
@@ -327,7 +323,6 @@ public class TmGui implements Observer {
 				}
 				// Start Multiplication	
 				startMultiSingle();
-				printResultat();
 			}
 
 			// Fakultät
@@ -409,8 +404,7 @@ public class TmGui implements Observer {
 			leftArea.setText("");
 			valueArea.setText("");
 			rightArea.setText("");
-			resultatField.setText("");
-			sleepField.setText("250");
+			sleepField.setText("0");
 			stateImageLabel.setIcon(new ImageIcon("./images/turingMachine.gif"));
 			frame.pack();
 			input2Field.setVisible(true);
