@@ -60,7 +60,8 @@ public class TmGui implements Observer {
 	private TmGui me;
 	private Machine machine;
 	private String type;
-
+	private long startTime;
+	
 	private Container southNorthPane;
 	private Container southSouthPane;
 
@@ -118,9 +119,9 @@ public class TmGui implements Observer {
 		// Ugly Hack
 		if(type.equals("multi")) {
 			resultat = resultat - Integer.parseInt(input1Field.getText()) - Integer.parseInt(input2Field.getText());
-			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter());
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter() + "\nTime: " + (System.currentTimeMillis() / 1000L - startTime) + "s");
 		} else {
-			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter());
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter() + "\nTime: " + (System.currentTimeMillis() / 1000L - startTime) + "s");
 
 		}
 	}
@@ -361,6 +362,7 @@ public class TmGui implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			startTime = System.currentTimeMillis() / 1000L;
 			autoButton.setEnabled(false);
 			resetButton.setEnabled(false);
 			nextStepButton.setEnabled(false);
