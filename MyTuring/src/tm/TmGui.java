@@ -118,9 +118,9 @@ public class TmGui implements Observer {
 		// Ugly Hack
 		if(type.equals("multi")) {
 			resultat = resultat - Integer.parseInt(input1Field.getText()) - Integer.parseInt(input2Field.getText());
-			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat);
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter());
 		} else {
-			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat);
+			JOptionPane.showMessageDialog(frame, "Resultat: " + resultat + "\nSteps: " + machine.getCounter());
 
 		}
 	}
