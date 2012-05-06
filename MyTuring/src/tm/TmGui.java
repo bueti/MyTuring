@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,6 +52,7 @@ public class TmGui implements Observer {
 	private JTextArea rightArea;
 	private BufferedImage stateImage;
 	private JLabel stateImageLabel;
+	private JCheckBox guiCheckBox;
 
 	private Multiplication multi;
 	private Factorial fact;
@@ -126,13 +128,14 @@ public class TmGui implements Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	    try {
-//	    	SwingUtilities.invokeLater(new Runnable() {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    updateGui();	            
-                }
-            });
+	    	if(guiCheckBox.isSelected()) {
+	    		SwingUtilities.invokeAndWait(new Runnable() {
+	    			@Override
+	    			public void run() {
+                		updateGui();
+	    			}
+	    		});
+	    	} 
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -255,6 +258,8 @@ public class TmGui implements Observer {
 		autoButton = new JButton("Auto");
 		resetButton = new JButton("Reset");
 		
+		guiCheckBox = new JCheckBox("GUI Updates?");
+		
 		
 		stateImageLabel = new JLabel(new ImageIcon("./images/turingMachine.gif"));
 
@@ -277,6 +282,7 @@ public class TmGui implements Observer {
 		centerPane.add(input1Field);
 		centerPane.add(operatorBox);
 		centerPane.add(input2Field);
+		centerPane.add(guiCheckBox);
 		centerPane.setLayout(new GridLayout(1, 0, 0, 0));
 
 		// Süden
@@ -387,7 +393,6 @@ public class TmGui implements Observer {
 				stateImageLabel.setVisible(true);
 				// Fakultät starten
 				startFactorialAuto();
-				printResultat();
 			}
 		}
 
